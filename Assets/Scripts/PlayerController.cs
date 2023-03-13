@@ -33,7 +33,16 @@ public class PlayerController : Unit
         }
 
         //get movement input
-        Vector3 movementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized * MovementSpeed;
+        Vector3 movementInput;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            movementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized * SprintSpeed;
+        }
+        else
+        {
+            movementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized * MovementSpeed;
+        }
 
         //get jump input
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())

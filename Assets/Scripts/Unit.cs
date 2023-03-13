@@ -12,21 +12,42 @@ public class Unit : MonoBehaviour
     internal Faction UnitFaction;
 
     protected Rigidbody _rigidbody;
+    private CapsuleCollider _collider;
 
     private const float GroundRayLength = 0.1f;
-    protected float unitHieght;
+    protected float _unitHieght;
 
     protected bool isAlive = true;
 
+    protected float _currentSpeed;
     [SerializeField] public float MovementSpeed = 5.0f;
     [SerializeField] public float SprintSpeed = 7.5f;
+    [SerializeField] public float CrouchSpeed = 2.5f;
+    [SerializeField] public float CrouchHeightRatio = 0.5f;
+    [SerializeField] public float CrouchSmoothness = 10.0f;
+    [SerializeField] public float SlideSpeed = 7.5f;
+    [SerializeField] public float SlideTime = 0.5f;
+    [SerializeField] public float SlideCooldown = 1.0f; //cools down from slide activation (not slide completion), prevents slide spamming
+    protected float _slideTimer;
     [SerializeField] public float JumpVelocity = 5.0f;
+
+    protected bool _isSprinting = false;
+    protected bool _isCrouching = false;
+    protected bool _isSliding = false;
+    protected bool _isSlideCooling = false;
+
+    protected float SimulatedLerpFrameRate = 60.0f;
 
     protected void Start()
     {
+        //get components
         _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<CapsuleCollider>();
 
-        unitHieght = GetComponent<CapsuleCollider>().height;
+        _unitHieght = _collider.height;
+
+        //initialize speed
+        _currentSpeed = MovementSpeed;
 
         //initialize unit health
         _permMaxHealth = BaseMaxHealth;
@@ -42,8 +63,14 @@ public class Unit : MonoBehaviour
     protected bool IsGrounded()
     {
         Vector3 origin = transform.position;
-        origin.y += (GroundRayLength - unitHieght) / 2.0f;
+        origin.y += (GroundRayLength - _collider.height) / 2.0f;
         return Physics.Raycast(origin, Vector3.down, GroundRayLength, LayerMask.GetMask("Ground"));
+    }
+
+    //for interpolating hitbox height when crouching/uncrouching
+    protected void UpdateHitBoxHeight(float targetHeightRatio)
+    {
+        _collider.height = Mathf.Lerp(_collider.height, _unitHieght * targetHeightRatio, 1 - Mathf.Pow(1 - (1 / CrouchSmoothness), SimulatedLerpFrameRate * Time.deltaTime));
     }
 
     #region Health System Methods

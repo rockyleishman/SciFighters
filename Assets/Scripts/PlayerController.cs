@@ -9,6 +9,7 @@ public class PlayerController : Unit
     [SerializeField] public float MouseSensitivityX = 1.0f;
     [SerializeField] public float MouseSensitivityY = 1.0f;
 
+    private bool _isJumping = false;
 
     private void Start()
     {
@@ -32,23 +33,80 @@ public class PlayerController : Unit
             return;
         }
 
-        //get movement input
-        Vector3 movementInput;
-
-        if (Input.GetKey(KeyCode.LeftShift))
+        //update isJumping
+        if (IsGrounded())
         {
-            movementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized * SprintSpeed;
+            _isJumping = false;
+        }
+
+        //get slide input
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !_isSlideCooling && (Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f))
+        {
+            _isSliding = true;
+            _isSlideCooling = true;
+            _slideTimer = 0.0f;
+        }
+
+        //determine if slide can be executed next frame
+        _slideTimer += Time.deltaTime;
+        if (_slideTimer >= SlideTime)
+        {
+            _isSliding = false;
+        }
+        if (_slideTimer >= SlideCooldown)
+        {
+            _isSlideCooling = false;
+        }
+
+        //get crouch/sprint input
+        if (Input.GetKey(KeyCode.LeftControl) && !_isJumping)
+        {
+            if (_isSliding)
+            {
+                _currentSpeed = SlideSpeed;
+            }
+            else
+            {
+                _currentSpeed = CrouchSpeed;
+            }
+            _isCrouching = true;
+            _isSprinting = false;
+
+            //////crouch camera & hitbox
+        }
+        else if (Input.GetKey(KeyCode.LeftShift) && !_isJumping)
+        {
+            _currentSpeed = SprintSpeed;
+            _isSprinting = true;
+            _isCrouching = false;
+            _isSliding = false;
         }
         else
         {
-            movementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized * MovementSpeed;
+            _currentSpeed = MovementSpeed;
+            _isSprinting = false;
+            _isCrouching = false;
+            _isSliding = false;
         }
+
+        //change collider height for crouching
+        if (_isCrouching)
+        {
+            UpdateHitBoxHeight(CrouchHeightRatio);
+        }
+        else
+        {
+            UpdateHitBoxHeight(1.0f);
+        }
+
+        //get movement input
+        Vector3 movementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized * _currentSpeed;
 
         //get jump input
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
+            _isJumping = true;
             movementInput.y = JumpVelocity;
-            //////trigger jump animation
         }
         else
         {

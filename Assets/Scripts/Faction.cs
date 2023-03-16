@@ -6,6 +6,5 @@ internal enum Faction
 {
     player,
     enemy,
-    ally,
     neutral
 }

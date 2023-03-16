@@ -11,7 +11,7 @@ public class PlayerController : Unit
 
     private bool _isJumping = false;
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
 
@@ -28,7 +28,7 @@ public class PlayerController : Unit
         _cameraPivot.Rotate(-Input.GetAxis("Mouse Y") * MouseSensitivityY, 0, 0);
 
         //disallow other movement if dead
-        if (!isAlive)
+        if (!IsAlive)
         {
             return;
         }

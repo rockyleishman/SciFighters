@@ -17,7 +17,7 @@ public class Unit : MonoBehaviour
     private const float GroundRayLength = 0.1f;
     protected float _unitHieght;
 
-    protected bool isAlive = true;
+    internal bool IsAlive { get; private protected set; }
 
     protected float _currentSpeed;
     [SerializeField] public float MovementSpeed = 5.0f;
@@ -38,7 +38,7 @@ public class Unit : MonoBehaviour
 
     protected float SimulatedLerpFrameRate = 60.0f;
 
-    protected void Start()
+    protected virtual void Start()
     {
         //get components
         _rigidbody = GetComponent<Rigidbody>();
@@ -53,6 +53,8 @@ public class Unit : MonoBehaviour
         _permMaxHealth = BaseMaxHealth;
         MaxHealth = _permMaxHealth;
         Health = MaxHealth;
+
+        IsAlive = true;
 
         if (BaseMaxHealth <= 0)
         {
@@ -94,7 +96,7 @@ public class Unit : MonoBehaviour
         if (Health <= 0)
         {
             Health = 0;
-            isAlive = false;
+            IsAlive = false;
         }
     }
 

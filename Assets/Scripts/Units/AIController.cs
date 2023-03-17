@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIController : Unit
+public abstract class AIController : Unit
 {
     private NavMeshAgent _agent;
 
@@ -13,9 +13,11 @@ public class AIController : Unit
     [SerializeField] public float ViewAngle = 75.0f;
     [SerializeField] public float DetectionDistance = 50.0f;
     [SerializeField] public float ChaseDistance = 100.0f;
+    [SerializeField] public float ChaseTime = 30.0f;
+    private float _chaseTimer;
 
     [SerializeField] public float PatrolPointReachedRadius = 5.0f;
-    [SerializeField] [Range(0.0f, 1.0f)] public float PatrolPointSwitchAverageSeconds = 15.0f;
+    [SerializeField] [Range(0.0f, 60.0f)] public float PatrolPointSwitchAverageSeconds = 10.0f;
 
     [SerializeField] public float TriggerDelay = 0.5f;
     [SerializeField] public float MaxInaccuracyDegrees = 5.0f;
@@ -25,6 +27,17 @@ public class AIController : Unit
 
     private PatrolPoint _currentPatrolPoint;
     private Unit _currentEnemy;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        _agent = GetComponent<NavMeshAgent>();
+
+        SetState(AIState.Idle);
+
+        _chaseTimer = 0.0f;
+    }
 
     void Update()
     {
@@ -57,6 +70,9 @@ public class AIController : Unit
 
     private IEnumerator OnIdle()
     {
+        ////////
+        Debug.Log("Idle");
+
         while (_currentPatrolPoint == null)
         {
             LookForNewPatrolPoint();
@@ -68,7 +84,10 @@ public class AIController : Unit
     private IEnumerator OnRoam()
     {
         _agent.SetDestination(_currentPatrolPoint.transform.position);
-        
+
+        ////////
+        Debug.Log("Roam to " + _currentPatrolPoint.DebugID);
+
         //while not near patrol point
         while (Vector3.Distance(transform.position, _currentPatrolPoint.transform.position) > PatrolPointReachedRadius)
         {
@@ -76,19 +95,29 @@ public class AIController : Unit
             ResetPatrolPointChance();
             yield return null;
         }
-        
+
+        ////////
+        Debug.Log("Patrol Point Reached");
+
         _currentPatrolPoint = null;
         SetState(AIState.Idle);
     }
 
     private IEnumerator OnChase()
     {
+        ////////
+        Debug.Log("Chase");
+
         //goto current enemy
         _agent.ResetPath();
 
-        while (_currentEnemy.IsAlive && !CanSeeTarget(_currentEnemy.transform) && Vector3.Distance(Eye.position, _currentEnemy.transform.position) <= ChaseDistance)
+        //reset chase timer
+        _chaseTimer = 0.0f;
+
+        while (_currentEnemy.IsAlive && !CanSeeTarget(_currentEnemy.transform) && Vector3.Distance(Eye.position, _currentEnemy.transform.position) <= ChaseDistance && _chaseTimer < ChaseTime)
         {
             _agent.SetDestination(_currentEnemy.transform.position);
+            _chaseTimer += Time.deltaTime;
             yield return null;
         }
 
@@ -105,8 +134,24 @@ public class AIController : Unit
 
     private IEnumerator OnAttack()
     {
-        //////attack current enemy
-        yield return null;
+        ////////
+        Debug.Log("Attack");
+
+        //attack current enemy
+        while (_currentEnemy.IsAlive && CanSeeTarget(_currentEnemy.transform))
+        {
+            AttackEnemy();
+            yield return null;
+        }
+
+        if (_currentEnemy.IsAlive)
+        {
+            SetState(AIState.Chase);
+        }
+        else
+        {
+            SetState(AIState.Idle);
+        }
     }
 
     private void LookForNewPatrolPoint()
@@ -137,9 +182,22 @@ public class AIController : Unit
         return true;
     }
 
+    protected abstract void AttackEnemy();
+ 
     private void DetectEnemies()
-    { 
-        //////detect enemies
+    {
+        //detect enemies
+        Collider[] surroundingColliders = Physics.OverlapSphere(this.transform.position, DetectionDistance);
+        foreach (Collider collider in surroundingColliders)
+        {
+            Unit unit = collider.GetComponent<Unit>();
+            
+            if (unit != null && unit != this && unit.UnitFaction != UnitFaction && unit.IsAlive && CanSeeTarget(unit.transform))
+            {
+                _currentEnemy = unit;
+                SetState(AIState.Chase);
+            }
+        }
     }
 
     //enhance roam simulation
@@ -147,7 +205,11 @@ public class AIController : Unit
     {
         if (Random.Range(0.0f, 1.0f) < 1.0f / PatrolPointSwitchAverageSeconds * Time.deltaTime)
         {
-            LookForNewPatrolPoint();
+            ////////
+            Debug.Log("Reset Patrol Point");
+
+            _currentPatrolPoint = null;
+            SetState(AIState.Idle);
         }
     }
 }

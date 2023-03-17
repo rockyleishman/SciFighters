@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class PatrolPoint : MonoBehaviour
 {
-    //no properties
+    ////REMOVE LATER
+    //for debugging AI
+    internal int DebugID = -1;
+    ////
 }

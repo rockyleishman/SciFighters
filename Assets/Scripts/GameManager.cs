@@ -18,10 +18,18 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public PatrolPoint[] LevelPatrolPoints;
+    internal PatrolPoint[] LevelPatrolPoints { get; private set; }
 
     void OnCreateInstance()
     {
-        LevelPatrolPoints = GetComponents<PatrolPoint>();
+        LevelPatrolPoints = GetComponentsInChildren<PatrolPoint>();
+
+        ////REMOVE LATER
+        //for debugging AI
+        for (int i = 0; i < LevelPatrolPoints.Length; i++)
+        {
+            LevelPatrolPoints[i].DebugID = i;
+        }
+        ////
     }
 }

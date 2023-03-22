@@ -113,6 +113,11 @@ public class PlayerController : Unit
         {
             _isJumping = true;
             movementInput.y = JumpVelocity;
+
+            ////////REMOVE LATER
+            //remove cursor
+            Cursor.lockState = CursorLockMode.Locked;
+            ////
         }
         else
         {

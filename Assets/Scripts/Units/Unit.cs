@@ -12,10 +12,8 @@ public abstract class Unit : MonoBehaviour
     internal Faction UnitFaction;
 
     protected Rigidbody _rigidbody;
-    private CapsuleCollider _collider;
 
     private const float GroundRayLength = 0.1f;
-    protected float _unitHieght;
 
     internal bool IsAlive { get; private protected set; }
 
@@ -37,9 +35,6 @@ public abstract class Unit : MonoBehaviour
     {
         //get components
         _rigidbody = GetComponent<Rigidbody>();
-        _collider = GetComponent<CapsuleCollider>();
-
-        _unitHieght = _collider.height;
 
         //initialize speed
         _currentSpeed = MovementSpeed;
@@ -60,14 +55,8 @@ public abstract class Unit : MonoBehaviour
     protected bool IsGrounded()
     {
         Vector3 origin = transform.position;
-        origin.y += (GroundRayLength - _collider.height) / 2.0f;
+        origin.y += GroundRayLength / 2.0f;
         return Physics.Raycast(origin, Vector3.down, GroundRayLength, LayerMask.GetMask("Ground"));
-    }
-
-    //for interpolating hitbox height when crouching/uncrouching
-    protected void UpdateHitBoxHeight(float targetHeightRatio)
-    {
-        _collider.height = Mathf.Lerp(_collider.height, _unitHieght * targetHeightRatio, 1 - Mathf.Pow(1 - (1 / CrouchSmoothness), SimulatedLerpFrameRate * Time.deltaTime));
     }
 
     #region Health System Methods

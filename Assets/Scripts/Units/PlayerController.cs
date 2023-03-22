@@ -94,6 +94,7 @@ public class PlayerController : Unit
         }
 
         //change collider height for crouching
+        /*
         if (_isCrouching)
         {
             UpdateHitBoxHeight(CrouchHeightRatio);
@@ -102,6 +103,7 @@ public class PlayerController : Unit
         {
             UpdateHitBoxHeight(1.0f);
         }
+        */
 
         //get movement input
         Vector3 movementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized * _currentSpeed;

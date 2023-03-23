@@ -12,7 +12,7 @@ public abstract class AIController : Unit
     [SerializeField] public Transform Eye;
     [SerializeField] public Transform GunTip;
     [SerializeField] public float ViewAngle = 75.0f;
-    [SerializeField] public float AimAngle = 3.0f;
+    [SerializeField] public float AimAngle = 5.0f;
     [SerializeField] public float DetectionDistance = 25.0f;
     [SerializeField] public float ChaseDistance = 50.0f;
     [SerializeField] public float ChaseTime = 30.0f;
@@ -22,7 +22,7 @@ public abstract class AIController : Unit
     [SerializeField] [Range(0.0f, 60.0f)] public float PatrolPointSwitchAverageSeconds = 10.0f;
 
     [SerializeField] public float TriggerDelay = 0.5f;
-    [SerializeField] public float MaxInaccuracyDegrees = 5.0f;
+    [SerializeField] public float MaxInaccuracyDegrees = 15.0f;
     [SerializeField] public float PrimaryDamage = 10.0f;
     [SerializeField] public float SecondaryDamage = 50.0f;
     [SerializeField] public float MeleeDamage = 10.0f;
@@ -35,6 +35,7 @@ public abstract class AIController : Unit
         base.Start();
 
         _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = MovementSpeed;
 
         SetState(AIState.Idle);
 
@@ -104,14 +105,14 @@ public abstract class AIController : Unit
         //reset chase timer
         _chaseTimer = 0.0f;
 
-        while (_currentEnemy.IsAlive && !CanSeeTarget(_currentEnemy.transform, GunTip, AimAngle) && Vector3.Distance(Eye.position, _currentEnemy.transform.position) <= ChaseDistance && _chaseTimer < ChaseTime)
+        while (_currentEnemy.IsAlive && !CanSeeTarget(_currentEnemy.transform, Eye, ViewAngle) && Vector3.Distance(Eye.position, _currentEnemy.transform.position) <= ChaseDistance && _chaseTimer < ChaseTime)
         {
             _agent.SetDestination(_currentEnemy.transform.position);
             _chaseTimer += Time.deltaTime;
             yield return null;
         }
 
-        if (CanSeeTarget(_currentEnemy.transform, GunTip, AimAngle))
+        if (CanSeeTarget(_currentEnemy.transform, Eye, ViewAngle))
         {
             SetState(AIState.Attack);
         }
@@ -125,8 +126,10 @@ public abstract class AIController : Unit
     private IEnumerator OnAttack()
     {
         //attack current enemy
-        while (_currentEnemy.IsAlive && CanSeeTarget(_currentEnemy.transform, GunTip, AimAngle))
+        while (_currentEnemy.IsAlive && CanSeeTarget(_currentEnemy.transform, Eye, ViewAngle))
         {
+            transform.LookAt(_currentEnemy.transform);
+            transform.localEulerAngles = new Vector3(0.0f, transform.localEulerAngles.y, 0.0f);
             AttackEnemy();
             yield return null;
         }

@@ -62,7 +62,7 @@ public abstract class Unit : MonoBehaviour
     #region Health System Methods
 
     //to be called when healing damage
-    public void Heal(int healAmount)
+    internal void Heal(int healAmount)
     {
         Health += healAmount;
 
@@ -73,25 +73,24 @@ public abstract class Unit : MonoBehaviour
     }
 
     //to be called when taking damage
-    public void Damage(int damageAmount)
+    internal void Damage(int damageAmount, Faction damagingFaction)
     {
-        Health -= damageAmount;
-
-        if (Health <= 0)
+        //cannot recieve damage from same faction
+        if (damagingFaction != UnitFaction)
         {
-            Health = 0;
-            IsAlive = false;
+            Health -= damageAmount;
+            CheckLife();
         }
     }
 
     //to be called to restore all health
-    public void RestoreHealth()
+    internal void RestoreHealth()
     {
         Health = MaxHealth;
     }
 
     //to be called for max health power-ups
-    public void IncMaxHealth(int increaseAmount)
+    internal void IncMaxHealth(int increaseAmount)
     {
         MaxHealth += increaseAmount;
         
@@ -105,7 +104,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     //to be called for max health power-downs
-    public void DecMaxHealth(int decreaseAmount)
+    internal void DecMaxHealth(int decreaseAmount)
     {
         MaxHealth -= decreaseAmount;
 
@@ -116,11 +115,11 @@ public abstract class Unit : MonoBehaviour
 
         //adjust health to new limits
         Heal(0);
-        Damage(0);
+        CheckLife();
     }
 
     //to be called to remove all max health power-ups and power-downs
-    public void RevertMaxHealth()
+    internal void RevertMaxHealth()
     {
         MaxHealth = _permMaxHealth;
 
@@ -131,11 +130,11 @@ public abstract class Unit : MonoBehaviour
 
         //adjust health to new limits
         Heal(0);
-        Damage(0);
+        CheckLife();
     }
 
     //to be called for max health upgrades
-    public void IncPermMaxHealth(int increaseAmount)
+    internal void IncPermMaxHealth(int increaseAmount)
     {
         _permMaxHealth += increaseAmount;
         MaxHealth += increaseAmount;
@@ -154,7 +153,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     //to be called for max health downgrades
-    public void DecPermMaxHealth(int decreaseAmount)
+    internal void DecPermMaxHealth(int decreaseAmount)
     {
         _permMaxHealth -= decreaseAmount;
         MaxHealth -= decreaseAmount;
@@ -170,11 +169,11 @@ public abstract class Unit : MonoBehaviour
 
         //adjust health to new limits
         Heal(0);
-        Damage(0);
+        CheckLife();
     }
 
     //to be called to remove all max health power-ups, power-downs, upgrades, and downgrades
-    public void RevertPermMaxHealth()
+    internal void RevertPermMaxHealth()
     {
         _permMaxHealth = BaseMaxHealth;
         MaxHealth = BaseMaxHealth;
@@ -186,6 +185,16 @@ public abstract class Unit : MonoBehaviour
 
         //adjust health to new limits
         Heal(0);
+    }
+
+    //makes isAlive false if health is too low
+    private void CheckLife()
+    {
+        if (Health <= 0)
+        {
+            Health = 0;
+            IsAlive = false;
+        }
     }
 
     #endregion

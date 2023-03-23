@@ -18,10 +18,10 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public PatrolPoint[] LevelPatrolPoints;
+    internal PatrolPoint[] LevelPatrolPoints { get; private set; }
 
     void OnCreateInstance()
     {
-        LevelPatrolPoints = GetComponents<PatrolPoint>();
+        LevelPatrolPoints = GetComponentsInChildren<PatrolPoint>();
     }
 }

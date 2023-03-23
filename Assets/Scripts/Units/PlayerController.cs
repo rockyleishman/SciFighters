@@ -114,7 +114,7 @@ public class PlayerController : Unit
             _isJumping = true;
             movementInput.y = JumpVelocity;
 
-            ////////REMOVE LATER
+            ////////TEMP FIX UNTIL MENU BUILT, REMOVE LATER
             //remove cursor
             Cursor.lockState = CursorLockMode.Locked;
             ////

@@ -23,16 +23,5 @@ public class GameManager : MonoBehaviour
     void OnCreateInstance()
     {
         LevelPatrolPoints = GetComponentsInChildren<PatrolPoint>();
-
-        //remove cursor
-        Cursor.visible = false;
-
-        ////REMOVE LATER
-        //for debugging AI
-        for (int i = 0; i < LevelPatrolPoints.Length; i++)
-        {
-            LevelPatrolPoints[i].DebugID = i;
-        }
-        ////
     }
 }

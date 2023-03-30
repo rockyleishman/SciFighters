@@ -64,6 +64,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseMaxHealth: 100
+  Eye: {fileID: 2053637061019851297}
+  GunTip: {fileID: 2053637061019851297}
+  LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
+  TriggerDelay: 0.5
+  MaxInaccuracyDegrees: 15
   MovementSpeed: 5
   SprintSpeed: 7.5
   CrouchSpeed: 2.5

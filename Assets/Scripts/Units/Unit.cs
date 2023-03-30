@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
-    [SerializeField] public int BaseMaxHealth = 100;
+    [SerializeField] public int BaseMaxHealth = 1000;
     protected int _permMaxHealth;
     internal int MaxHealth { get; private protected set; }
     internal int Health { get; private protected set; }
@@ -13,9 +13,18 @@ public abstract class Unit : MonoBehaviour
 
     protected Rigidbody _rigidbody;
 
+    [SerializeField] public Transform Eye;
+    [SerializeField] public Transform GunTip;
+
+    [SerializeField] public Laser LaserPrefab;
+    private const float NoHitLaserLength = 500.0f;
+
     private const float GroundRayLength = 0.1f;
 
     internal bool IsAlive { get; private protected set; }
+
+    [SerializeField] public float TriggerDelay = 0.5f;
+    [SerializeField] public float MaxInaccuracyDegrees = 15.0f;
 
     protected float _currentSpeed;
     [SerializeField] public float MovementSpeed = 5.0f;
@@ -198,4 +207,50 @@ public abstract class Unit : MonoBehaviour
     }
 
     #endregion
+
+    internal void FireLaser(int damage, float inaccuracy, Color laserColor)
+    {
+        Vector3 laserDirection = InaccurateDirection(GunTip.forward, inaccuracy);
+
+        Ray ray = new Ray(GunTip.position, laserDirection);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            //hit something
+            DrawLaser(GunTip.position, hit.point, laserColor);
+
+            Unit unitHit = hit.collider.GetComponentInParent<Unit>();
+            if (unitHit != null)
+            {
+                unitHit.Damage(damage, UnitFaction);
+            }
+        }
+        else
+        {
+            //no hit
+            DrawLaser(GunTip.position, GunTip.position + laserDirection * NoHitLaserLength, laserColor);
+        }
+    }
+
+    private void DrawLaser(Vector3 start, Vector3 end, Color color)
+    {
+        //////get laser from pool
+        Laser laser = Instantiate(LaserPrefab) as Laser;
+        laser.Init(start, end, color);
+    }
+
+    private Vector3 InaccurateDirection(Vector3 direction, float maxInaccuracy)
+    {
+        float inaccuracyAlpha = maxInaccuracy / 180.0f;
+        if (inaccuracyAlpha > 1.0f)
+        {
+            inaccuracyAlpha = 1.0f;
+        }
+        else if (inaccuracyAlpha < 0.0f)
+        {
+            inaccuracyAlpha = 0.0f;
+        }
+
+        return ((Random.onUnitSphere * inaccuracyAlpha) + (direction.normalized * (1 - inaccuracyAlpha))).normalized;
+    }
 }

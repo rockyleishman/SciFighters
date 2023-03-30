@@ -22,6 +22,10 @@ public class PlayerController : Unit
         //player is always of the faction "player"
         UnitFaction = Faction.player;
 
+        //player has no forced inaccuracy or trigger delay
+        TriggerDelay = 0.0f;
+        MaxInaccuracyDegrees = 0.0f;
+
         _playerCamera = GetComponentInChildren<Camera>();
         _cameraPivot = _playerCamera.transform.parent;
     }
@@ -122,6 +126,13 @@ public class PlayerController : Unit
         else
         {
             movementInput.y = _rigidbody.velocity.y;
+        }
+
+        ////////test laser
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Debug.Log("firing laser");
+            FireLaser(10, 0.0f, Color.red);
         }
 
         //commit movement

@@ -694,7 +694,7 @@ MonoBehaviour:
   BaseMaxHealth: 100
   Eye: {fileID: 429035395}
   GunTip: {fileID: 1265371325}
-  LaserPrefab: {fileID: 0}
+  LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
   TriggerDelay: 0.5
   MaxInaccuracyDegrees: 5
   MovementSpeed: 5

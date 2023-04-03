@@ -14,7 +14,12 @@ public abstract class Unit : MonoBehaviour
     protected Rigidbody _rigidbody;
 
     [SerializeField] public Transform Eye;
-    [SerializeField] public Transform GunTip;
+    protected Transform _gunTip;
+
+    [SerializeField] public Weapon[] Weapons;
+    protected Weapon _equipedWeapon;
+    protected int _equipedWeaponSlot;
+    [SerializeField] public int UnloadedAmmo;
 
     [SerializeField] public Laser LaserPrefab;
     private const float NoHitLaserLength = 500.0f;
@@ -208,16 +213,16 @@ public abstract class Unit : MonoBehaviour
 
     #endregion
 
-    internal void FireLaser(int damage, float inaccuracy, Color laserColor)
+    internal void FireLaser(int damage, float lazerInaccuracy, Color laserColor)
     {
-        Vector3 laserDirection = InaccurateDirection(GunTip.forward, inaccuracy);
+        Vector3 laserDirection = InaccurateDirection(_gunTip.forward, MaxInaccuracyDegrees + lazerInaccuracy);
 
-        Ray ray = new Ray(GunTip.position, laserDirection);
+        Ray ray = new Ray(_gunTip.position, laserDirection);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             //hit something
-            DrawLaser(GunTip.position, hit.point, laserColor);
+            DrawLaser(_gunTip.position, hit.point, laserColor);
 
             Unit unitHit = hit.collider.GetComponentInParent<Unit>();
             if (unitHit != null)
@@ -228,7 +233,7 @@ public abstract class Unit : MonoBehaviour
         else
         {
             //no hit
-            DrawLaser(GunTip.position, GunTip.position + laserDirection * NoHitLaserLength, laserColor);
+            DrawLaser(_gunTip.position, _gunTip.position + laserDirection * NoHitLaserLength, laserColor);
         }
     }
 
@@ -252,5 +257,11 @@ public abstract class Unit : MonoBehaviour
         }
 
         return ((Random.onUnitSphere * inaccuracyAlpha) + (direction.normalized * (1 - inaccuracyAlpha))).normalized;
+    }
+
+    protected void EquipWeapon()
+    {
+        _equipedWeapon = Weapons[_equipedWeaponSlot];
+        _gunTip = _equipedWeapon.BarrelEnd;
     }
 }

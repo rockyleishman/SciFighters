@@ -65,7 +65,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseMaxHealth: 100
   Eye: {fileID: 2053637061019851297}
-  GunTip: {fileID: 2053637061019851297}
+  Weapons:
+  - {fileID: 5885496926223535769, guid: 39ab60e7d0d43b040b63a6f98b8012b1, type: 3}
+  - {fileID: 9139809355511142446, guid: d8867a1444fbc1d46ac805f29aa253b1, type: 3}
+  UnloadedAmmo: 0
   LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
   TriggerDelay: 0.5
   MaxInaccuracyDegrees: 15

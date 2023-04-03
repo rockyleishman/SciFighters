@@ -48,7 +48,7 @@ public class PlayerController : Unit
         }
 
         //get slide input
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !_isSlideCooling && (Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f))
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !_isSlideCooling && (Input.GetAxisRaw("Horizontal") != 0.0f || Input.GetAxisRaw("Vertical") != 0.0f))
         {
             _isSliding = true;
             _isSlideCooling = true;
@@ -110,7 +110,7 @@ public class PlayerController : Unit
         */
 
         //get movement input
-        Vector3 movementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized * _currentSpeed;
+        Vector3 movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * _currentSpeed;
 
         //get jump input
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())

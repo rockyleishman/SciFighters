@@ -48,7 +48,7 @@ public class PlayerController : Unit
         }
 
         //get slide input
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !_isSlideCooling && (Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f))
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !_isSlideCooling && (Input.GetAxisRaw("Horizontal") != 0.0f || Input.GetAxisRaw("Vertical") != 0.0f))
         {
             _isSliding = true;
             _isSlideCooling = true;
@@ -109,8 +109,40 @@ public class PlayerController : Unit
         }
         */
 
+        //switch weapon
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            _equipedWeaponSlot++;
+            if (_equipedWeaponSlot >= Weapons.Length)
+            {
+                _equipedWeaponSlot = 0;
+            }
+
+            _equipedWeapon = Weapons[_equipedWeaponSlot];
+            _gunTip = _equipedWeapon.BarrelEnd;
+
+            //////play weapon change sound
+            //////visual weapon change needed
+        }
+
+        //reload weapon
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            UnloadedAmmo = _equipedWeapon.Reload(UnloadedAmmo);
+        }
+
+        //fire weapon
+        if (Input.GetMouseButton(0) && _equipedWeapon.IsAutomatic)
+        {
+            _equipedWeapon.Fire(this);
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            _equipedWeapon.Fire(this);
+        }
+
         //get movement input
-        Vector3 movementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized * _currentSpeed;
+        Vector3 movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * _currentSpeed;
 
         //get jump input
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
@@ -126,13 +158,6 @@ public class PlayerController : Unit
         else
         {
             movementInput.y = _rigidbody.velocity.y;
-        }
-
-        ////////test laser
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Debug.Log("firing laser");
-            FireLaser(10, 0.0f, Color.red);
         }
 
         //commit movement

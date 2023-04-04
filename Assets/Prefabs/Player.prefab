@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 7035470068488502077}
   - {fileID: 2396417646146747705}
-  - {fileID: 2053637061145557813}
+  - {fileID: 2053637061019851297}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -66,7 +66,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseMaxHealth: 100
   Eye: {fileID: 2053637061019851297}
-  GunTip: {fileID: 2053637061019851297}
+  Weapons:
+  - {fileID: 5885496926223535769, guid: 39ab60e7d0d43b040b63a6f98b8012b1, type: 3}
+  - {fileID: 9139809355511142446, guid: d8867a1444fbc1d46ac805f29aa253b1, type: 3}
+  UnloadedAmmo: 100
   LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
   TriggerDelay: 0.5
   MaxInaccuracyDegrees: 15
@@ -104,13 +107,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053637061019851296}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.11788237, z: -1.6635884}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.75, z: 0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5573196306620056845}
-  m_RootOrder: 0
+  m_Children:
+  - {fileID: 2053637061145557813}
+  m_Father: {fileID: 2053637060704465458}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2053637061145557814
 GameObject:
@@ -140,12 +144,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053637061145557814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.7814709, z: -0.076}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2053637060704465458}
-  m_RootOrder: 2
+  m_Father: {fileID: 2053637061019851297}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &2053637061145557812
 Camera:
@@ -359,10 +363,5 @@ PrefabInstance:
 --- !u!4 &2396417646146747705 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5124541495474518313, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
-  m_PrefabInstance: {fileID: 7376841702982288400}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &5573196306620056845 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3100788758888808733, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
   m_PrefabInstance: {fileID: 7376841702982288400}
   m_PrefabAsset: {fileID: 0}

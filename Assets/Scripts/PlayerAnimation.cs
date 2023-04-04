@@ -22,12 +22,6 @@ public class PlayerAnimation : MonoBehaviour
         {
 
 
-
-
-
-
-
-
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
                 ani.SetBool("Crouch", true);
@@ -39,7 +33,7 @@ public class PlayerAnimation : MonoBehaviour
                 walk();
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    Run();
+                    ani.SetTrigger("Jump");
                 }
             }
             

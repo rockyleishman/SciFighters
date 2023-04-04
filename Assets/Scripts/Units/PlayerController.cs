@@ -28,10 +28,6 @@ public class PlayerController : Unit
 
         _playerCamera = GetComponentInChildren<Camera>();
         _cameraPivot = _playerCamera.transform.parent;
-
-        //equip weapon
-        _equipedWeaponSlot = 0;
-        EquipWeapon();
     }
 
     private void Update()

@@ -64,6 +64,10 @@ public abstract class Unit : MonoBehaviour
         {
             throw new System.Exception("Base Max Health must be positive!");
         }
+
+        //equip weapon
+        _equipedWeaponSlot = 0;
+        EquipWeapon();
     }
 
     protected bool IsGrounded()

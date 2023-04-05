@@ -217,6 +217,8 @@ public abstract class Unit : MonoBehaviour
 
     #endregion
 
+    #region Laser Methods
+
     internal void FireLaser(int damage, float lazerInaccuracy, Color laserColor)
     {
         Vector3 laserDirection = InaccurateDirection(Eye.forward, MaxInaccuracyDegrees + lazerInaccuracy);
@@ -262,6 +264,8 @@ public abstract class Unit : MonoBehaviour
 
         return ((Random.onUnitSphere * inaccuracyAlpha) + (direction.normalized * (1 - inaccuracyAlpha))).normalized;
     }
+
+    #endregion
 
     protected void EquipWeapon()
     {

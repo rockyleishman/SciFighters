@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BarrelEnd: {fileID: 7625820013794391578}
   Damage: 5
-  Inaccuracy: 10
+  Inaccuracy: 5
   Cooldown: 0.2
   MagazineSize: 50
   IsAutomatic: 1

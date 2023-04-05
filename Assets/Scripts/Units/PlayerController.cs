@@ -123,8 +123,7 @@ public class PlayerController : Unit
                 _equipedWeaponSlot = 0;
             }
 
-            _equipedWeapon = Weapons[_equipedWeaponSlot];
-            _gunTip = _equipedWeapon.BarrelEnd;
+            EquipWeapon();
 
             //////play weapon change sound
             //////visual weapon change needed

@@ -95,7 +95,7 @@ public abstract class AIController : Unit
 
     private IEnumerator OnChase()
     {
-        //goto current enemy
+        //stop current path
         _agent.ResetPath();
 
         //reset chase timer

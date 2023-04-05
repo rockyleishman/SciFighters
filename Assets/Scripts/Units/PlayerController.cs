@@ -127,7 +127,8 @@ public class PlayerController : Unit
 
             EquipWeapon();
 
-            Instantiate(WeaponChangeAudioPrefab);
+            Audio sound = Instantiate(WeaponChangeAudioPrefab);
+            sound.transform.position = transform.position;
 
             //////visual weapon change needed
         }

@@ -8,6 +8,9 @@ public class Audio : MonoBehaviour
 
     void Start()
     {
+        AudioSource source = GetComponent<AudioSource>();
+        source.volume = source.volume / Vector3.Distance(transform.position, Camera.main.transform.position);
+        
         Invoke("DestroyThis", LifeTime);
     }
 

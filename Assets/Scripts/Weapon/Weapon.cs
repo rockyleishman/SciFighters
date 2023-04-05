@@ -48,7 +48,8 @@ public class Weapon : MonoBehaviour
 
             CooldownTimer = ReloadTime;
 
-            Instantiate(ReloadAudioPrefab);
+            Audio sound = Instantiate(ReloadAudioPrefab);
+            sound.transform.position = transform.position;
         }
         else
         {
@@ -57,7 +58,8 @@ public class Weapon : MonoBehaviour
 
             CooldownTimer = ReloadTime;
 
-            Instantiate(ReloadAudioPrefab);
+            Audio sound = Instantiate(ReloadAudioPrefab);
+            sound.transform.position = transform.position;
         }
 
         return playerAmmo;
@@ -72,7 +74,8 @@ public class Weapon : MonoBehaviour
             Ammo--;
             CooldownTimer = Cooldown;
 
-            Instantiate(FireAudioPrefab);
+            Audio sound = Instantiate(FireAudioPrefab);
+            sound.transform.position = transform.position;
         }
         else if (CooldownTimer > 0.0f)
         {
@@ -83,8 +86,9 @@ public class Weapon : MonoBehaviour
             //dry fire
             CooldownTimer = Cooldown;
 
-            Instantiate(DryFireAudioPrefab);
-            
+            Audio sound = Instantiate(DryFireAudioPrefab);
+            sound.transform.position = transform.position;
+
             return false;
         }
 

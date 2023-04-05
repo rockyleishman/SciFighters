@@ -31,6 +31,11 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] public float TriggerDelay = 0.5f;
     [SerializeField] public float MaxInaccuracyDegrees = 15.0f;
 
+    [SerializeField] public Audio Hurt1AudioPrefab;
+    [SerializeField] public Audio Hurt2AudioPrefab;
+    [SerializeField] public Audio Hurt3AudioPrefab;
+    [SerializeField] public Audio DeathAudioPrefab;
+
     protected float _currentSpeed;
     [SerializeField] public float MovementSpeed = 1.5f;
     [SerializeField] public float SprintSpeed = 3.5f;
@@ -98,6 +103,26 @@ public abstract class Unit : MonoBehaviour
         {
             Health -= damageAmount;
             CheckLife();
+
+            //hurt audio
+            Audio sound;
+            int hurtNum = Random.Range(0, 3);
+            switch(hurtNum)
+            {
+                case 0:
+                    sound = Instantiate(Hurt1AudioPrefab);
+                    sound.transform.position = transform.position;
+                    break;
+                case 1:
+                    sound = Instantiate(Hurt2AudioPrefab);
+                    sound.transform.position = transform.position;
+                    break;
+                case 2:
+                    sound = Instantiate(Hurt3AudioPrefab);
+                    sound.transform.position = transform.position;
+                    break;
+            }
+                
         }
     }
 

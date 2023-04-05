@@ -202,6 +202,9 @@ public abstract class AIController : Unit
     {
         //////dying animation
 
+        Audio sound = Instantiate(DeathAudioPrefab);
+        sound.transform.position = transform.position;
+
         this.enabled = false;
         Destroy(this.gameObject);
     }

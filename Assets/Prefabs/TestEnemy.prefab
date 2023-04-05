@@ -103,6 +103,10 @@ MonoBehaviour:
   LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
   TriggerDelay: 0.5
   MaxInaccuracyDegrees: 5
+  Hurt1AudioPrefab: {fileID: 8953094202857078631, guid: e6ededa9a5e3e6749b4b07690b5377ba, type: 3}
+  Hurt2AudioPrefab: {fileID: 8953094202857078631, guid: 68178d0f36f0e0944b81b32849c9d8a0, type: 3}
+  Hurt3AudioPrefab: {fileID: 8953094202857078631, guid: dac5b2778eadd5a4ead5ab0865421e50, type: 3}
+  DeathAudioPrefab: {fileID: 8953094202857078631, guid: f5b0978f0e0d65347ba5c831dc38c673, type: 3}
   MovementSpeed: 5
   SprintSpeed: 7.5
   CrouchSpeed: 2.5

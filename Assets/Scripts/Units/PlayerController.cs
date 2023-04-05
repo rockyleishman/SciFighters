@@ -30,6 +30,12 @@ public class PlayerController : Unit
 
         _playerCamera = GetComponentInChildren<Camera>();
         _cameraPivot = _playerCamera.transform.parent;
+
+        //hide weapons
+        foreach (Weapon gun in Weapons)
+        {
+            gun.transform.localScale = Vector3.zero;
+        }
     }
 
     private void Update()
@@ -182,6 +188,9 @@ public class PlayerController : Unit
     {
         //////dying animation
         
+        Audio sound = Instantiate(DeathAudioPrefab);
+        sound.transform.position = transform.position;
+
         //////open menu, show score, restart or quit
 
         //player is dead

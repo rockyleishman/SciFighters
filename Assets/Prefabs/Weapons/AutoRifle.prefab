@@ -54,7 +54,7 @@ MonoBehaviour:
   Inaccuracy: 5
   Cooldown: 0.2
   MagazineSize: 50
-  ReloadTime: 3
+  ReloadTime: 2
   IsAutomatic: 1
   LaserColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &4220838535722227302

@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7992098455095767968}
   - component: {fileID: 7992098455095767971}
-  - component: {fileID: 7086950248243263236}
+  - component: {fileID: 8953094202857078631}
   m_Layer: 0
-  m_Name: ReloadAudio
+  m_Name: SniperFireAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d196488b1b8964c46b2a2b6fa547027b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f81b136c5019a314ab61a48bfcb91fe8, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -129,7 +129,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7086950248243263236
+--- !u!114 &8953094202857078631
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,4 +141,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a7e288a9523974aad534a52d973b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LifeTime: 2
+  LifeTime: 1.5

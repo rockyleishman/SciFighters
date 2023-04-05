@@ -756,7 +756,7 @@ MonoBehaviour:
   Eye: {fileID: 429035395}
   Weapons:
   - {fileID: 1535899481}
-  UnloadedAmmo: 0
+  UnloadedAmmo: 50000
   LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
   TriggerDelay: 0.5
   MaxInaccuracyDegrees: 5

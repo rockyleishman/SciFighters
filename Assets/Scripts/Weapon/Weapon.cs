@@ -49,11 +49,11 @@ public class Weapon : MonoBehaviour
         return playerAmmo;
     }
 
-    public void Fire(Unit user)
+    public bool Fire(Unit user)
     {
         if (Ammo > 0 && CooldownTimer < 0.0f)
         {
-            user.FireLaser(Damage, Inaccuracy, LaserColor);
+            user.FireLaser(Damage, Inaccuracy + user.MaxInaccuracyDegrees, LaserColor);
             Ammo--;
             CooldownTimer = Cooldown;
         }
@@ -64,6 +64,10 @@ public class Weapon : MonoBehaviour
         else
         {
             //////play dryfire sound
+            ///
+            return false;
         }
+
+        return true;
     }
 }

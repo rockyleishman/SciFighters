@@ -64,12 +64,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd7f6878c600fab4e92c4889275d3ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseMaxHealth: 100
+  BaseMaxHealth: 1000
   Eye: {fileID: 2053637061019851297}
   Weapons:
   - {fileID: 6213093010557361037}
   - {fileID: 3606462167329993502}
-  UnloadedAmmo: 100
+  UnloadedAmmo: 200
   LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
   TriggerDelay: 0.5
   MaxInaccuracyDegrees: 15

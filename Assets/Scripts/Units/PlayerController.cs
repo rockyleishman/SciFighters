@@ -9,6 +9,8 @@ public class PlayerController : Unit
     [SerializeField] public float MouseSensitivityX = 1.0f;
     [SerializeField] public float MouseSensitivityY = 1.0f;
 
+    [SerializeField] public Audio WeaponChangeAudioPrefab;
+
     protected bool _isSprinting = false;
     protected bool _isCrouching = false;
     protected bool _isSliding = false;
@@ -125,7 +127,8 @@ public class PlayerController : Unit
 
             EquipWeapon();
 
-            //////play weapon change sound
+            Instantiate(WeaponChangeAudioPrefab);
+
             //////visual weapon change needed
         }
 

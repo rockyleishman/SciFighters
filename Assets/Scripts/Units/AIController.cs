@@ -110,6 +110,7 @@ public abstract class AIController : Unit
 
         if (CanSeeTarget(_currentEnemy.transform, Eye, ViewAngle))
         {
+            _agent.ResetPath();
             SetState(AIState.Attack);
         }
         else

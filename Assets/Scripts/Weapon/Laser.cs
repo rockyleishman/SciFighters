@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    [SerializeField] public float LifeTime = 0.1f;
+    [SerializeField] public float LifeTime = 0.05f;
     private LineRenderer _line;
 
     private void Awake()

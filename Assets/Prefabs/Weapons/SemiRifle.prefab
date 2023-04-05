@@ -142,10 +142,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BarrelEnd: {fileID: 3333684062591393129}
+  ReloadAudioPrefab: {fileID: 7086950248243263236, guid: 9d37b8f4bcc4db944bc576fcf82d5ba6, type: 3}
+  FireAudioPrefab: {fileID: 253248327102174436, guid: 14fbfdceb4be832449aabdcfed03a4e9, type: 3}
+  DryFireAudioPrefab: {fileID: 6654538478513543587, guid: 80467a438e3eb8544be8f57aa9e3448b, type: 3}
   Damage: 10
   Inaccuracy: 0
   Cooldown: 0
   MagazineSize: 10
+  ReloadTime: 3
   IsAutomatic: 0
   LaserColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &8258893127464461410

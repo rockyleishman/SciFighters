@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd7f6878c600fab4e92c4889275d3ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseMaxHealth: 1000
+  BaseMaxHealth: 500
   Eye: {fileID: 2053637061019851297}
   Weapons:
   - {fileID: 6213093010557361037}
@@ -84,6 +84,7 @@ MonoBehaviour:
   JumpVelocity: 5
   MouseSensitivityX: 2
   MouseSensitivityY: 2
+  WeaponChangeAudioPrefab: {fileID: 8953094202857078631, guid: 240e1831a9dab414fa07a98d6eb0a0a7, type: 3}
 --- !u!1 &2053637061019851296
 GameObject:
   m_ObjectHideFlags: 0

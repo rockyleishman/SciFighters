@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
-    [SerializeField] public int BaseMaxHealth = 100;
+    [SerializeField] public int BaseMaxHealth = 1000;
     protected int _permMaxHealth;
     internal int MaxHealth { get; private protected set; }
     internal int Health { get; private protected set; }
@@ -13,13 +13,27 @@ public abstract class Unit : MonoBehaviour
 
     protected Rigidbody _rigidbody;
 
+    [SerializeField] public Transform Eye;
+    protected Transform _gunTip;
+
+    [SerializeField] public Weapon[] Weapons;
+    protected Weapon _equipedWeapon;
+    protected int _equipedWeaponSlot;
+    [SerializeField] public int UnloadedAmmo;
+
+    [SerializeField] public Laser LaserPrefab;
+    private const float NoHitLaserLength = 500.0f;
+
     private const float GroundRayLength = 0.1f;
 
     internal bool IsAlive { get; private protected set; }
 
+    [SerializeField] public float TriggerDelay = 0.5f;
+    [SerializeField] public float MaxInaccuracyDegrees = 15.0f;
+
     protected float _currentSpeed;
-    [SerializeField] public float MovementSpeed = 5.0f;
-    [SerializeField] public float SprintSpeed = 7.5f;
+    [SerializeField] public float MovementSpeed = 1.5f;
+    [SerializeField] public float SprintSpeed = 3.5f;
     [SerializeField] public float CrouchSpeed = 2.5f;
     [SerializeField] public float CrouchHeightRatio = 0.5f;
     [SerializeField] public float CrouchSmoothness = 10.0f;
@@ -50,6 +64,10 @@ public abstract class Unit : MonoBehaviour
         {
             throw new System.Exception("Base Max Health must be positive!");
         }
+
+        //equip weapon
+        _equipedWeaponSlot = 0;
+        EquipWeapon();
     }
 
     protected bool IsGrounded()
@@ -194,8 +212,81 @@ public abstract class Unit : MonoBehaviour
         {
             Health = 0;
             IsAlive = false;
+            Die();
         }
     }
 
     #endregion
+
+    #region Laser Methods
+
+    internal void FireLaser(int damage, float lazerInaccuracy, Color laserColor)
+    {
+        Vector3 laserDirection = InaccurateDirection(Eye.forward, MaxInaccuracyDegrees + lazerInaccuracy);
+
+        Ray ray = new Ray(Eye.position, laserDirection);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            //hit something
+            DrawLaser(_gunTip.position, hit.point, laserColor);
+
+            Unit unitHit = hit.collider.GetComponentInParent<Unit>();
+            if (unitHit != null)
+            {
+                unitHit.Damage(damage, UnitFaction);
+            }
+        }
+        else
+        {
+            //no hit
+            DrawLaser(_gunTip.position, _gunTip.position + laserDirection * NoHitLaserLength, laserColor);
+        }
+    }
+
+    private void DrawLaser(Vector3 start, Vector3 end, Color color)
+    {
+        //////get laser from pool
+        Laser laser = Instantiate(LaserPrefab) as Laser;
+        laser.Init(start, end, color);
+    }
+
+    private Vector3 InaccurateDirection(Vector3 direction, float maxInaccuracy)
+    {
+        float inaccuracyAlpha = maxInaccuracy / 180.0f;
+        if (inaccuracyAlpha > 1.0f)
+        {
+            inaccuracyAlpha = 1.0f;
+        }
+        else if (inaccuracyAlpha < 0.0f)
+        {
+            inaccuracyAlpha = 0.0f;
+        }
+
+        return ((Random.onUnitSphere * inaccuracyAlpha) + (direction.normalized * (1 - inaccuracyAlpha))).normalized;
+    }
+
+    #endregion
+
+    protected void EquipWeapon()
+    {
+        //hide current weapon
+        try
+        {
+            _equipedWeapon.transform.localScale = Vector3.zero;
+        }
+        catch
+        { 
+            //nothing happens if no weapon is currently equiped
+        }
+
+        //equip new weapon
+        _equipedWeapon = Weapons[_equipedWeaponSlot];
+        _gunTip = _equipedWeapon.BarrelEnd;
+
+        //show new weapon
+        _equipedWeapon.transform.localScale = Vector3.one;
+    }
+
+    protected abstract void Die();
 }

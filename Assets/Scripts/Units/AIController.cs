@@ -9,8 +9,6 @@ public abstract class AIController : Unit
 
     private AIState _currentState;
 
-    [SerializeField] public Transform Eye;
-    [SerializeField] public Transform GunTip;
     [SerializeField] public float ViewAngle = 75.0f;
     [SerializeField] public float AimAngle = 5.0f;
     [SerializeField] public float DetectionDistance = 25.0f;
@@ -21,8 +19,6 @@ public abstract class AIController : Unit
     [SerializeField] public float PatrolPointReachedRadius = 5.0f;
     [SerializeField] [Range(0.0f, 60.0f)] public float PatrolPointSwitchAverageSeconds = 10.0f;
 
-    [SerializeField] public float TriggerDelay = 0.5f;
-    [SerializeField] public float MaxInaccuracyDegrees = 15.0f;
     [SerializeField] public float PrimaryDamage = 10.0f;
     [SerializeField] public float SecondaryDamage = 50.0f;
     [SerializeField] public float MeleeDamage = 10.0f;
@@ -199,5 +195,13 @@ public abstract class AIController : Unit
             _currentPatrolPoint = null;
             SetState(AIState.Idle);
         }
+    }
+
+    protected override void Die()
+    {
+        //////dying animation
+
+        this.enabled = false;
+        Destroy(this.gameObject);
     }
 }

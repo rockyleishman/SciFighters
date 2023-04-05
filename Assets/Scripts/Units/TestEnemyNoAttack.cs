@@ -22,10 +22,11 @@ public class TestEnemyNoAttack : AIController
         if (attackTimer > 1.0f)
         {
             attackTimer = 0.0f;
-            FireLaser(1, 15.0f, Color.red);
+
+            if (!_equipedWeapon.Fire(this))
+            {
+                _equipedWeapon.Reload(UnloadedAmmo);
+            }
         }
-
-
-        
     }
 }

@@ -9,6 +9,8 @@ public class PlayerController : Unit
     [SerializeField] public float MouseSensitivityX = 1.0f;
     [SerializeField] public float MouseSensitivityY = 1.0f;
 
+    [SerializeField] public Audio WeaponChangeAudioPrefab;
+
     protected bool _isSprinting = false;
     protected bool _isCrouching = false;
     protected bool _isSliding = false;
@@ -48,7 +50,7 @@ public class PlayerController : Unit
         }
 
         //get slide input
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !_isSlideCooling && (Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f))
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !_isSlideCooling && (Input.GetAxisRaw("Horizontal") != 0.0f || Input.GetAxisRaw("Vertical") != 0.0f))
         {
             _isSliding = true;
             _isSlideCooling = true;
@@ -84,10 +86,15 @@ public class PlayerController : Unit
         }
         else if (Input.GetKey(KeyCode.LeftShift) && !_isJumping)
         {
-            _currentSpeed = SprintSpeed;
-            _isSprinting = true;
-            _isCrouching = false;
-            _isSliding = false;
+            if (Input.GetKey(KeyCode.W))   // Only can run when press W key
+            {
+                _currentSpeed = SprintSpeed;
+                _isSprinting = true;
+                _isCrouching = false;
+                _isSliding = false;
+            }
+            
+
         }
         else
         {
@@ -109,11 +116,45 @@ public class PlayerController : Unit
         }
         */
 
-        //get movement input
-        Vector3 movementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized * _currentSpeed;
+        //switch weapon
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            _equipedWeaponSlot++;
+            if (_equipedWeaponSlot >= Weapons.Length)
+            {
+                _equipedWeaponSlot = 0;
+            }
 
-        //get jump input
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+            EquipWeapon();
+
+            Audio sound = Instantiate(WeaponChangeAudioPrefab);
+            sound.transform.position = transform.position;
+
+            //////visual weapon change needed
+        }
+
+        //reload weapon
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            UnloadedAmmo = _equipedWeapon.Reload(UnloadedAmmo);
+        }
+
+        //fire weapon
+        if (Input.GetMouseButton(0) && _equipedWeapon.IsAutomatic)
+        {
+            _equipedWeapon.Fire(this);
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            _equipedWeapon.Fire(this);
+        }
+
+        //get movement input
+        Vector3 movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * _currentSpeed;
+
+
+            //get jump input
+            if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             _isJumping = true;
             movementInput.y = JumpVelocity;
@@ -128,13 +169,6 @@ public class PlayerController : Unit
             movementInput.y = _rigidbody.velocity.y;
         }
 
-        ////////test laser
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Debug.Log("firing laser");
-            FireLaser(10, 0.0f, Color.red);
-        }
-
         //commit movement
         _rigidbody.velocity = transform.TransformVector(movementInput);
         //////animate movement
@@ -142,5 +176,14 @@ public class PlayerController : Unit
         //rotate player
         transform.Rotate(0, Input.GetAxis("Mouse X") * MouseSensitivityX, 0);
 
+    }
+
+    protected override void Die()
+    {
+        //////dying animation
+        
+        //////open menu, show score, restart or quit
+
+        //player is dead
     }
 }

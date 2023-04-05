@@ -95,7 +95,7 @@ public abstract class AIController : Unit
 
     private IEnumerator OnChase()
     {
-        //goto current enemy
+        //stop current path
         _agent.ResetPath();
 
         //reset chase timer
@@ -110,6 +110,7 @@ public abstract class AIController : Unit
 
         if (CanSeeTarget(_currentEnemy.transform, Eye, ViewAngle))
         {
+            _agent.ResetPath();
             SetState(AIState.Attack);
         }
         else
@@ -195,5 +196,13 @@ public abstract class AIController : Unit
             _currentPatrolPoint = null;
             SetState(AIState.Idle);
         }
+    }
+
+    protected override void Die()
+    {
+        //////dying animation
+
+        this.enabled = false;
+        Destroy(this.gameObject);
     }
 }

@@ -14,7 +14,12 @@ public abstract class Unit : MonoBehaviour
     protected Rigidbody _rigidbody;
 
     [SerializeField] public Transform Eye;
-    [SerializeField] public Transform GunTip;
+    protected Transform _gunTip;
+
+    [SerializeField] public Weapon[] Weapons;
+    protected Weapon _equipedWeapon;
+    protected int _equipedWeaponSlot;
+    [SerializeField] public int UnloadedAmmo;
 
     [SerializeField] public Laser LaserPrefab;
     private const float NoHitLaserLength = 500.0f;
@@ -27,8 +32,8 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] public float MaxInaccuracyDegrees = 15.0f;
 
     protected float _currentSpeed;
-    [SerializeField] public float MovementSpeed = 5.0f;
-    [SerializeField] public float SprintSpeed = 7.5f;
+    [SerializeField] public float MovementSpeed = 1.5f;
+    [SerializeField] public float SprintSpeed = 3.5f;
     [SerializeField] public float CrouchSpeed = 2.5f;
     [SerializeField] public float CrouchHeightRatio = 0.5f;
     [SerializeField] public float CrouchSmoothness = 10.0f;
@@ -59,6 +64,10 @@ public abstract class Unit : MonoBehaviour
         {
             throw new System.Exception("Base Max Health must be positive!");
         }
+
+        //equip weapon
+        _equipedWeaponSlot = 0;
+        EquipWeapon();
     }
 
     protected bool IsGrounded()
@@ -203,21 +212,24 @@ public abstract class Unit : MonoBehaviour
         {
             Health = 0;
             IsAlive = false;
+            Die();
         }
     }
 
     #endregion
 
-    internal void FireLaser(int damage, float inaccuracy, Color laserColor)
-    {
-        Vector3 laserDirection = InaccurateDirection(GunTip.forward, inaccuracy);
+    #region Laser Methods
 
-        Ray ray = new Ray(GunTip.position, laserDirection);
+    internal void FireLaser(int damage, float lazerInaccuracy, Color laserColor)
+    {
+        Vector3 laserDirection = InaccurateDirection(Eye.forward, MaxInaccuracyDegrees + lazerInaccuracy);
+
+        Ray ray = new Ray(Eye.position, laserDirection);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             //hit something
-            DrawLaser(GunTip.position, hit.point, laserColor);
+            DrawLaser(_gunTip.position, hit.point, laserColor);
 
             Unit unitHit = hit.collider.GetComponentInParent<Unit>();
             if (unitHit != null)
@@ -228,7 +240,7 @@ public abstract class Unit : MonoBehaviour
         else
         {
             //no hit
-            DrawLaser(GunTip.position, GunTip.position + laserDirection * NoHitLaserLength, laserColor);
+            DrawLaser(_gunTip.position, _gunTip.position + laserDirection * NoHitLaserLength, laserColor);
         }
     }
 
@@ -253,4 +265,28 @@ public abstract class Unit : MonoBehaviour
 
         return ((Random.onUnitSphere * inaccuracyAlpha) + (direction.normalized * (1 - inaccuracyAlpha))).normalized;
     }
+
+    #endregion
+
+    protected void EquipWeapon()
+    {
+        //hide current weapon
+        try
+        {
+            _equipedWeapon.transform.localScale = Vector3.zero;
+        }
+        catch
+        { 
+            //nothing happens if no weapon is currently equiped
+        }
+
+        //equip new weapon
+        _equipedWeapon = Weapons[_equipedWeaponSlot];
+        _gunTip = _equipedWeapon.BarrelEnd;
+
+        //show new weapon
+        _equipedWeapon.transform.localScale = Vector3.one;
+    }
+
+    protected abstract void Die();
 }

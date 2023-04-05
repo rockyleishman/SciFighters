@@ -5,6 +5,9 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] public Transform BarrelEnd;
+    [SerializeField] public Audio ReloadAudioPrefab;
+    [SerializeField] public Audio FireAudioPrefab;
+    [SerializeField] public Audio DryFireAudioPrefab;
 
     [SerializeField] public int Damage;
     [SerializeField] public float Inaccuracy;
@@ -12,6 +15,7 @@ public class Weapon : MonoBehaviour
     internal float CooldownTimer { get; private protected set; }
     [SerializeField] public int MagazineSize;
     internal int Ammo { get; private protected set; }
+    [SerializeField] public float ReloadTime;
     [SerializeField] public bool IsAutomatic;
     [SerializeField] public Color LaserColor;
 
@@ -33,38 +37,58 @@ public class Weapon : MonoBehaviour
     {
         int neededAmmo = MagazineSize - Ammo;
 
-        if (playerAmmo < neededAmmo)
+        if (neededAmmo == 0)
+        { 
+            //gun is already fully loaded
+        }
+        else if (playerAmmo < neededAmmo)
         {
             Ammo = playerAmmo;
             playerAmmo = 0;
+
+            CooldownTimer = ReloadTime;
+
+            Audio sound = Instantiate(ReloadAudioPrefab);
+            sound.transform.position = transform.position;
         }
         else
         {
-            Ammo = neededAmmo;
+            Ammo += neededAmmo;
             playerAmmo -= neededAmmo;
-        }
 
-        //////play reload sound
+            CooldownTimer = ReloadTime;
+
+            Audio sound = Instantiate(ReloadAudioPrefab);
+            sound.transform.position = transform.position;
+        }
 
         return playerAmmo;
     }
 
+    //attempts to fire the gun and returns true if the gun was loaded
     public bool Fire(Unit user)
     {
         if (Ammo > 0 && CooldownTimer < 0.0f)
         {
-            user.FireLaser(Damage, Inaccuracy + user.MaxInaccuracyDegrees, LaserColor);
+            user.FireLaser(Damage, Inaccuracy, LaserColor);
             Ammo--;
             CooldownTimer = Cooldown;
+
+            Audio sound = Instantiate(FireAudioPrefab);
+            sound.transform.position = transform.position;
         }
-        else if (Cooldown < 0.0f)
+        else if (CooldownTimer > 0.0f)
         {
             //gun on cooldown
         }
         else
         {
-            //////play dryfire sound
-            ///
+            //dry fire
+            CooldownTimer = Cooldown;
+
+            Audio sound = Instantiate(DryFireAudioPrefab);
+            sound.transform.position = transform.position;
+
             return false;
         }
 

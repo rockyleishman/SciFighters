@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 6092927675778876000}
   - component: {fileID: 5885496926223535769}
   m_Layer: 0
-  m_Name: SemiRifle
+  m_Name: SniperRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,6 +126,7 @@ Transform:
   m_Children:
   - {fileID: 5747123032048263644}
   - {fileID: 5285604506954376746}
+  - {fileID: 5637889422667178880}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -143,15 +144,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BarrelEnd: {fileID: 3333684062591393129}
   ReloadAudioPrefab: {fileID: 7086950248243263236, guid: 9d37b8f4bcc4db944bc576fcf82d5ba6, type: 3}
-  FireAudioPrefab: {fileID: 253248327102174436, guid: 14fbfdceb4be832449aabdcfed03a4e9, type: 3}
+  FireAudioPrefab: {fileID: 8953094202857078631, guid: 028051c890197334280fa681bc578cce, type: 3}
   DryFireAudioPrefab: {fileID: 6654538478513543587, guid: 80467a438e3eb8544be8f57aa9e3448b, type: 3}
-  Damage: 10
+  Damage: 25
   Inaccuracy: 0
-  Cooldown: 0
-  MagazineSize: 10
+  Cooldown: 1
+  MagazineSize: 5
   ReloadTime: 2
   IsAutomatic: 0
-  LaserColor: {r: 0, g: 1, b: 0, a: 1}
+  LaserColor: {r: 1, g: 0, b: 1, a: 1}
 --- !u!1 &8258893127464461410
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,3 +240,65 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 0.047865096, z: 0.2446941}
     m_Extent: {x: 0.04279703, y: 0.15324983, z: 0.661549}
   m_DirtyAABB: 0
+--- !u!1001 &5311846168378934379
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6092927675778876000}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1895
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1504
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+      propertyPath: m_Name
+      value: SM_Wep_Attachment_Scope_02
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+--- !u!4 &5637889422667178880 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 842e03e67ba9eaf468481b4153c6bfa5, type: 3}
+  m_PrefabInstance: {fileID: 5311846168378934379}
+  m_PrefabAsset: {fileID: 0}

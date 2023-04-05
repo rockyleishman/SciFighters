@@ -84,10 +84,15 @@ public class PlayerController : Unit
         }
         else if (Input.GetKey(KeyCode.LeftShift) && !_isJumping)
         {
-            _currentSpeed = SprintSpeed;
-            _isSprinting = true;
-            _isCrouching = false;
-            _isSliding = false;
+            if (Input.GetKey(KeyCode.W))   // Only can run when press W key
+            {
+                _currentSpeed = SprintSpeed;
+                _isSprinting = true;
+                _isCrouching = false;
+                _isSliding = false;
+            }
+            
+
         }
         else
         {
@@ -144,8 +149,9 @@ public class PlayerController : Unit
         //get movement input
         Vector3 movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * _currentSpeed;
 
-        //get jump input
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+
+            //get jump input
+            if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             _isJumping = true;
             movementInput.y = JumpVelocity;

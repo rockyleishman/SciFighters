@@ -11,7 +11,7 @@ public class PlayerAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ani= GetComponent<Animator>();
+        ani = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class PlayerAnimation : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
                 ani.SetBool("Crouch", true);
-                
+
             }
 
             else
@@ -36,7 +36,7 @@ public class PlayerAnimation : MonoBehaviour
                     ani.SetTrigger("Jump");
                 }
             }
-            
+
         }
         else  // if repress the ctrl key, set it back to walk state
         {
@@ -46,21 +46,28 @@ public class PlayerAnimation : MonoBehaviour
                 ani.SetBool("Crouch", false);
             }
         }
-        if (ani.GetBool("Run") == false)
-        {
-            if (Input.GetKeyDown(KeyCode.LeftShift)) //if press shift, set it to run state
-            {
-                ani.SetBool("Run", true);
-            }
 
-        }
-        else  //if it is in running state, pressing shift set it to walk state
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                ani.SetBool("Run", false);
-            }
+            ani.SetBool("isRunning", true);
         }
+        else
+        {
+            ani.SetBool("isRunning", false);
+        }
+        if (Input.GetMouseButton(0))
+        {
+            ani.SetBool("FireBool", true);
+        }
+        else
+        {
+            ani.SetBool("FireBool", false);
+        }
+        if (Input.GetKey(KeyCode.R))
+        {
+            ani.SetTrigger("ReloadTrigger");
+        }
+
 
 
     }
@@ -73,11 +80,11 @@ public class PlayerAnimation : MonoBehaviour
             verticalInput = Input.GetAxis("Vertical");
             if (horizontalInput > 1)
             {
-                horizontalInput=1;
+                horizontalInput = 1;
             }
             if (verticalInput > 1)
             {
-                verticalInput=1;
+                verticalInput = 1;
             }
             ani.SetFloat("Horizontal", horizontalInput, 0.05f, Time.deltaTime);
             ani.SetFloat("Vertical", verticalInput, 0.05f, Time.deltaTime);
@@ -114,7 +121,7 @@ public class PlayerAnimation : MonoBehaviour
     void Run()
     {
 
-            ani.SetTrigger("Run");
+        ani.SetTrigger("Run");
 
     }
 }

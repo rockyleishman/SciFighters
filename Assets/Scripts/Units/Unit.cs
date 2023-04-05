@@ -212,6 +212,7 @@ public abstract class Unit : MonoBehaviour
         {
             Health = 0;
             IsAlive = false;
+            Die();
         }
     }
 
@@ -286,4 +287,6 @@ public abstract class Unit : MonoBehaviour
         //show new weapon
         _equipedWeapon.transform.localScale = Vector3.one;
     }
+
+    protected abstract void Die();
 }

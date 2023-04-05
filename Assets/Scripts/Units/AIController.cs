@@ -196,4 +196,12 @@ public abstract class AIController : Unit
             SetState(AIState.Idle);
         }
     }
+
+    protected override void Die()
+    {
+        //////dying animation
+
+        this.enabled = false;
+        Destroy(this.gameObject);
+    }
 }

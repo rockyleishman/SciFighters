@@ -173,4 +173,13 @@ public class PlayerController : Unit
         transform.Rotate(0, Input.GetAxis("Mouse X") * MouseSensitivityX, 0);
 
     }
+
+    protected override void Die()
+    {
+        //////dying animation
+        
+        //////open menu, show score, restart or quit
+
+        //player is dead
+    }
 }

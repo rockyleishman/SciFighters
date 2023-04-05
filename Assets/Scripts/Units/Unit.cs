@@ -219,9 +219,9 @@ public abstract class Unit : MonoBehaviour
 
     internal void FireLaser(int damage, float lazerInaccuracy, Color laserColor)
     {
-        Vector3 laserDirection = InaccurateDirection(_gunTip.forward, MaxInaccuracyDegrees + lazerInaccuracy);
+        Vector3 laserDirection = InaccurateDirection(Eye.forward, MaxInaccuracyDegrees + lazerInaccuracy);
 
-        Ray ray = new Ray(_gunTip.position, laserDirection);
+        Ray ray = new Ray(Eye.position, laserDirection);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
@@ -265,7 +265,21 @@ public abstract class Unit : MonoBehaviour
 
     protected void EquipWeapon()
     {
+        //hide current weapon
+        try
+        {
+            _equipedWeapon.transform.localScale = Vector3.zero;
+        }
+        catch
+        { 
+            //nothing happens if no weapon is currently equiped
+        }
+
+        //equip new weapon
         _equipedWeapon = Weapons[_equipedWeaponSlot];
         _gunTip = _equipedWeapon.BarrelEnd;
+
+        //show new weapon
+        _equipedWeapon.transform.localScale = Vector3.one;
     }
 }

@@ -18,9 +18,16 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
 
-        if (ani.GetBool("Crouch") == false)  //when the state is walking, we can set it to crouch state or just use walk function
+        if (ani.GetBool("Crouch") == false)  //walk
         {
-
+            if (Input.GetMouseButton(0))
+            {
+                ani.SetBool("FireBool", true);
+            }
+            else
+            {
+                ani.SetBool("FireBool", false);
+            }
 
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
@@ -36,37 +43,57 @@ public class PlayerAnimation : MonoBehaviour
                     ani.SetTrigger("Jump");
                 }
             }
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
+            {
+                ani.SetBool("isRunning", true);
+            }
+            else
+            {
+                ani.SetBool("isRunning", false);
+            }
 
+            if (Input.GetKey(KeyCode.R))
+            {
+                ani.SetTrigger("ReloadTrigger");
+            }
         }
-        else  // if repress the ctrl key, set it back to walk state
+        else         // Crouch
         {
             Crouch();
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
                 ani.SetBool("Crouch", false);
             }
+
+            if (Input.GetMouseButton((0))&&!Input.GetKey(KeyCode.W))     // rapid Fire Mode
+            {
+                ani.SetBool("RapidFireCrouch", true);
+            }
+            else
+            {
+                ani.SetBool("RapidFireCrouch", false);
+            }
+
+            if (Input.GetKeyDown((KeyCode.R)))
+            {
+                ani.SetTrigger("CrouchReload");
+            }
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    ani.SetBool("FireMoving",true);
+                }
+                if (Input.GetMouseButtonUp(0))
+                {
+                    ani.SetBool("FireMoving",false);
+                }
+            }
+            
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
-        {
-            ani.SetBool("isRunning", true);
-        }
-        else
-        {
-            ani.SetBool("isRunning", false);
-        }
-        if (Input.GetMouseButton(0))
-        {
-            ani.SetBool("FireBool", true);
-        }
-        else
-        {
-            ani.SetBool("FireBool", false);
-        }
-        if (Input.GetKey(KeyCode.R))
-        {
-            ani.SetTrigger("ReloadTrigger");
-        }
+
 
 
 

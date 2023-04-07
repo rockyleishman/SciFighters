@@ -49,7 +49,7 @@ public abstract class Unit : MonoBehaviour
     {
         //get components
         _rigidbody = GetComponent<Rigidbody>();
-
+        _rigidbody.isKinematic = true;
         //initialize speed
         _currentSpeed = MovementSpeed;
 

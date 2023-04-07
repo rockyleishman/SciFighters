@@ -32,9 +32,9 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] public float MaxInaccuracyDegrees = 15.0f;
 
     protected float _currentSpeed;
-    [SerializeField] public float MovementSpeed = 2f;
-    [SerializeField] public float SprintSpeed =3.5f;
-    [SerializeField] public float CrouchSpeed = 0.5f;
+    [SerializeField] public float MovementSpeed = 3f;
+    [SerializeField] public float SprintSpeed =6f;
+    [SerializeField] public float CrouchSpeed = 2f;
     [SerializeField] public float CrouchHeightRatio = 0.5f;
     [SerializeField] public float CrouchSmoothness = 10.0f;
     [SerializeField] public float SlideSpeed = 7.5f;

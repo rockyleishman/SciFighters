@@ -74,9 +74,9 @@ MonoBehaviour:
   LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
   TriggerDelay: 0.5
   MaxInaccuracyDegrees: 15
-  MovementSpeed: 1.5
-  SprintSpeed: 2.5
-  CrouchSpeed: 0.5
+  MovementSpeed: 3
+  SprintSpeed: 6
+  CrouchSpeed: 2
   CrouchHeightRatio: 0.5
   CrouchSmoothness: 10
   SlideSpeed: 7.5

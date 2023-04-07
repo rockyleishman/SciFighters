@@ -440,6 +440,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2053637060704465458}
     m_Modifications:
+    - target: {fileID: 440511699578321643, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 777285975125180990, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 780883322429543918, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1296521581551166291, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_Controller
       value: 
@@ -447,6 +459,26 @@ PrefabInstance:
     - target: {fileID: 1296521581551166291, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2212450986530104033, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2924190702685279875, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128355033661184208, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706374576618694555, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038838173923573545, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5124541495474518313, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_RootOrder
@@ -495,6 +527,26 @@ PrefabInstance:
     - target: {fileID: 5500539989855937427, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_Name
       value: SK_Char_Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5908040457606477832, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6221560515829349565, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268412417155465013, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8003686614261028199, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088310553055428847, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}

@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     private Animator ani;
-    float horizontalInput = Input.GetAxis("Horizontal");
-    float verticalInput = Input.GetAxis("Vertical");
+    float horizontalInput ;
+    float verticalInput ;
 
     // Start is called before the first frame update
     void Start()

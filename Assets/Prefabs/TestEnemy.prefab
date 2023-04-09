@@ -103,15 +103,16 @@ MonoBehaviour:
   LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
   TriggerDelay: 0.5
   MaxInaccuracyDegrees: 5
-  MovementSpeed: 5
-  SprintSpeed: 7.5
-  CrouchSpeed: 2.5
+  MovementSpeed: 3
+  SprintSpeed: 6
+  CrouchSpeed: 2
   CrouchHeightRatio: 0.5
   CrouchSmoothness: 10
   SlideSpeed: 7.5
   SlideTime: 0.5
   SlideCooldown: 1
   JumpVelocity: 5
+  ani: {fileID: 0}
   ViewAngle: 75
   AimAngle: 5
   DetectionDistance: 25
@@ -213,6 +214,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SK_Character_Alien_Male_01
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 72ec116989aba2c46b76b08d5ec7906b, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3a29d7e1166b4f54ab1064b8432debb5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72ec116989aba2c46b76b08d5ec7906b, type: 3}
 --- !u!4 &1049338097847791613 stripped

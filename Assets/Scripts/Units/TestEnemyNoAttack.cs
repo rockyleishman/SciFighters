@@ -19,7 +19,7 @@ public class TestEnemyNoAttack : AIController
     {
         attackTimer += Time.deltaTime;
 
-        if (attackTimer > 1.0f)
+        if (attackTimer > TriggerDelay)
         {
             attackTimer = 0.0f;
 

@@ -140,12 +140,21 @@ public abstract class AIController : Unit
         //attack current enemy
         while (_currentEnemy.IsAlive && CanSeeTarget(_currentEnemy.transform, Eye, ViewAngle))
         {
+            //turn
             transform.LookAt(_currentEnemy.transform);
             transform.localEulerAngles = new Vector3(0.0f, transform.localEulerAngles.y, 0.0f);
+
+            //aim
+            //Eye.transform.LookAt(_currentEnemy.transform);
+            //Eye.transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0.0f, transform.localEulerAngles.z);
+
+            //attack
             AttackEnemy();
+            
             //set Attack animation
             ani.SetBool("isRunning", false);
             ani.SetBool("FireBool",true);
+            
             yield return null;
         }
 
@@ -171,6 +180,9 @@ public abstract class AIController : Unit
         //cannot see if not within view angle
         if (Vector3.Angle(transform.forward, target.position - eye.position) > viewAngle)
         {
+            ////////
+            Debug.Log("out of view angle");
+
             return false;
         }
 
@@ -180,6 +192,8 @@ public abstract class AIController : Unit
             //cannot see if something is in the way
             if (hit.transform != target)
             {
+                Debug.Log("something in the way");
+
                 return false;
             }
         }

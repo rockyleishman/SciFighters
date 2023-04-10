@@ -28,7 +28,7 @@ public abstract class Unit : MonoBehaviour
 
     internal bool IsAlive { get; private protected set; }
 
-    [SerializeField] public float TriggerDelay = 0.5f;
+    [SerializeField] public float TriggerDelay = 1.0f;
     [SerializeField] public float MaxInaccuracyDegrees = 15.0f;
 
     [SerializeField] public Audio Hurt1AudioPrefab;

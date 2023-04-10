@@ -576,6 +576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d4d6c34429b984f8fc3c0debec2f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 2053637060704465456}
 --- !u!4 &8968917367109609141 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1884809919097103013, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}

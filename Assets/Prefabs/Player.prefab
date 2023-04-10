@@ -81,8 +81,8 @@ MonoBehaviour:
   MovementSpeed: 5
   SprintSpeed: 7.5
   CrouchSpeed: 2.5
-  CrouchHeightRatio: 0.5
-  CrouchSmoothness: 10
+  CrouchHeightRatio: 0.6
+  CrouchCameraSpeed: 5
   SlideSpeed: 7.5
   SlideTime: 0.5
   SlideCooldown: 1

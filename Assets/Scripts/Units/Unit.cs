@@ -37,24 +37,22 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] public Audio DeathAudioPrefab;
 
     protected float _currentSpeed;
-    [SerializeField] public float MovementSpeed = 3f;
-    [SerializeField] public float SprintSpeed =6f;
-    [SerializeField] public float CrouchSpeed = 2f;
-    [SerializeField] public float CrouchHeightRatio = 0.5f;
-    [SerializeField] public float CrouchSmoothness = 10.0f;
+    [SerializeField] public float MovementSpeed = 5.0f;
+    [SerializeField] public float SprintSpeed = 7.5f;
+    [SerializeField] public float CrouchSpeed = 2.5f;
+    [SerializeField] public float CrouchHeightRatio = 0.6f;
+    [SerializeField] public float CrouchCameraSpeed = 5.0f;
     [SerializeField] public float SlideSpeed = 7.5f;
     [SerializeField] public float SlideTime = 0.5f;
     [SerializeField] public float SlideCooldown = 1.0f; //cools down from slide activation (not slide completion), prevents slide spamming
     protected float _slideTimer;
     [SerializeField] public float JumpVelocity = 5.0f;
 
-    protected float SimulatedLerpFrameRate = 60.0f;
-
     protected virtual void Start()
     {
         //get components
         _rigidbody = GetComponent<Rigidbody>();
-        //_rigidbody.isKinematic = true;
+        
         //initialize speed
         _currentSpeed = MovementSpeed;
 
@@ -75,7 +73,7 @@ public abstract class Unit : MonoBehaviour
         EquipWeapon();
     }
 
-    protected bool IsGrounded()
+    internal bool IsGrounded()
     {
         Vector3 origin = transform.position;
         origin.y += GroundRayLength / 2.0f;

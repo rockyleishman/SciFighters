@@ -6,6 +6,8 @@ public class PlayerController : Unit
 {
     private Camera _playerCamera; //for aiming
     private Transform _cameraPivot; //for moving view angle
+    private Vector3 _cameraPivotStandingPosition;
+    private Vector3 _cameraPivotCrouchingPosition;
     [SerializeField] public float MouseSensitivityX = 1.0f;
     [SerializeField] public float MouseSensitivityY = 1.0f;
 
@@ -28,8 +30,13 @@ public class PlayerController : Unit
         TriggerDelay = 0.0f;
         MaxInaccuracyDegrees = 0.0f;
 
+        //init camera and pivot
         _playerCamera = GetComponentInChildren<Camera>();
         _cameraPivot = _playerCamera.transform.parent;
+
+        //get camera positions
+        _cameraPivotStandingPosition = _cameraPivot.localPosition;
+        _cameraPivotCrouchingPosition = new Vector3(_cameraPivotStandingPosition.x, _cameraPivotStandingPosition.y * CrouchHeightRatio, _cameraPivotStandingPosition.z);
 
         //hide weapons
         foreach (Weapon gun in Weapons)
@@ -55,12 +62,26 @@ public class PlayerController : Unit
             _isJumping = false;
         }
 
-        //get slide input
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !_isSlideCooling && (Input.GetAxisRaw("Horizontal") != 0.0f || Input.GetAxisRaw("Vertical") != 0.0f))
+        //toggle crouch
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            _isSliding = true;
-            _isSlideCooling = true;
-            _slideTimer = 0.0f;
+            if (_isCrouching)
+            {
+                _isCrouching = false;
+                _isSliding = false;
+            }
+            else
+            {
+                _isCrouching = true;
+
+                //get slide input
+                if (!_isSlideCooling && (Input.GetAxisRaw("Horizontal") != 0.0f || Input.GetAxisRaw("Vertical") != 0.0f))
+                {
+                    _isSliding = true;
+                    _isSlideCooling = true;
+                    _slideTimer = 0.0f;
+                }
+            }
         }
 
         //determine if slide can be executed next frame
@@ -75,7 +96,7 @@ public class PlayerController : Unit
         }
 
         //get crouch/sprint input
-        if (Input.GetKey(KeyCode.LeftControl) && !_isJumping)
+        if (_isCrouching)
         {
             if (_isSliding)
             {
@@ -85,22 +106,18 @@ public class PlayerController : Unit
             {
                 _currentSpeed = CrouchSpeed;
             }
-            _isCrouching = true;
             _isSprinting = false;
-
-            //////crouch camera & hitbox
         }
         else if (Input.GetKey(KeyCode.LeftShift) && !_isJumping)
         {
-            if (Input.GetKey(KeyCode.W))   // Only can run when press W key
+            //can only run forward and forward-diagonal
+            if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
             {
                 _currentSpeed = SprintSpeed;
                 _isSprinting = true;
                 _isCrouching = false;
                 _isSliding = false;
             }
-            
-
         }
         else
         {
@@ -110,17 +127,15 @@ public class PlayerController : Unit
             _isSliding = false;
         }
 
-        //change collider height for crouching
-        /*
+        //change camera height for crouching
         if (_isCrouching)
         {
-            UpdateHitBoxHeight(CrouchHeightRatio);
+            _cameraPivot.localPosition = Vector3.MoveTowards(_cameraPivot.localPosition, _cameraPivotCrouchingPosition, Time.deltaTime * CrouchCameraSpeed);
         }
         else
         {
-            UpdateHitBoxHeight(1.0f);
+            _cameraPivot.localPosition = Vector3.MoveTowards(_cameraPivot.localPosition, _cameraPivotStandingPosition, Time.deltaTime * CrouchCameraSpeed);
         }
-        */
 
         //switch weapon
         if (Input.GetKeyDown(KeyCode.E))
@@ -135,8 +150,6 @@ public class PlayerController : Unit
 
             Audio sound = Instantiate(WeaponChangeAudioPrefab);
             sound.transform.position = transform.position;
-
-            //////visual weapon change needed
         }
 
         //reload weapon
@@ -158,14 +171,17 @@ public class PlayerController : Unit
         //get movement input
         Vector3 movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * _currentSpeed;
 
-
-            //get jump input
-            if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        //get jump input
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             _isJumping = true;
             movementInput.y = JumpVelocity;
 
-            ////////TEMP FIX UNTIL MENU BUILT, REMOVE LATER
+            //legs must extend to jump
+            _isCrouching = false;
+            _isSliding = false;
+
+            ////////TEMP FIX UNTIL UI BUILT, REMOVE LATER
             //remove cursor
             Cursor.lockState = CursorLockMode.Locked;
             ////
@@ -177,7 +193,6 @@ public class PlayerController : Unit
 
         //commit movement
         _rigidbody.velocity = transform.TransformVector(movementInput);
-        //////animate movement
 
         //rotate player
         transform.Rotate(0, Input.GetAxis("Mouse X") * MouseSensitivityX, 0);
@@ -186,13 +201,11 @@ public class PlayerController : Unit
 
     protected override void Die()
     {
-        //////dying animation
-        
         Audio sound = Instantiate(DeathAudioPrefab);
         sound.transform.position = transform.position;
 
         //////open menu, show score, restart or quit
 
-        //player is dead
+        //player is now dead
     }
 }

@@ -867,6 +867,14 @@ PrefabInstance:
       propertyPath: Eye
       value: 
       objectReference: {fileID: 1930332699}
+    - target: {fileID: 2053637060704465456, guid: 7f848776ea70d684a9580c4dd4952cdf, type: 3}
+      propertyPath: SprintSpeed
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2053637060704465456, guid: 7f848776ea70d684a9580c4dd4952cdf, type: 3}
+      propertyPath: MovementSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2053637060704465458, guid: 7f848776ea70d684a9580c4dd4952cdf, type: 3}
       propertyPath: m_RootOrder
       value: 4

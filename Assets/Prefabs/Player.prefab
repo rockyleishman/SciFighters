@@ -78,9 +78,9 @@ MonoBehaviour:
   Hurt2AudioPrefab: {fileID: 8953094202857078631, guid: 68178d0f36f0e0944b81b32849c9d8a0, type: 3}
   Hurt3AudioPrefab: {fileID: 8953094202857078631, guid: dac5b2778eadd5a4ead5ab0865421e50, type: 3}
   DeathAudioPrefab: {fileID: 8953094202857078631, guid: f5b0978f0e0d65347ba5c831dc38c673, type: 3}
-  MovementSpeed: 5
-  SprintSpeed: 7.5
-  CrouchSpeed: 2.5
+  MovementSpeed: 3
+  SprintSpeed: 6
+  CrouchSpeed: 2
   CrouchHeightRatio: 0.5
   CrouchSmoothness: 10
   SlideSpeed: 7.5
@@ -245,7 +245,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -444,6 +444,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2053637060704465458}
     m_Modifications:
+    - target: {fileID: 440511699578321643, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 777285975125180990, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 780883322429543918, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1296521581551166291, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_Controller
       value: 
@@ -451,6 +463,26 @@ PrefabInstance:
     - target: {fileID: 1296521581551166291, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2212450986530104033, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2924190702685279875, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128355033661184208, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4706374576618694555, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038838173923573545, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5124541495474518313, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_RootOrder
@@ -470,23 +502,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5124541495474518313, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6532815
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5124541495474518313, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.6532815
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5124541495474518313, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.27059805
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5124541495474518313, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.27059805
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5124541495474518313, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5124541495474518313, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -494,11 +526,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5124541495474518313, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5500539989855937427, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_Name
       value: SK_Char_Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5908040457606477832, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6221560515829349565, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268412417155465013, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8003686614261028199, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088310553055428847, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}

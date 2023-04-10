@@ -8,7 +8,7 @@ public abstract class AIController : Unit
     private NavMeshAgent _agent;
 
     private AIState _currentState;
-
+    [SerializeField] public Animator ani;     // define the animator
     [SerializeField] public float ViewAngle = 75.0f;
     [SerializeField] public float AimAngle = 5.0f;
     [SerializeField] public float DetectionDistance = 25.0f;
@@ -29,7 +29,7 @@ public abstract class AIController : Unit
     protected override void Start()
     {
         base.Start();
-
+        ani = this.GetComponentInChildren<Animator>();  //get the animator in child
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = MovementSpeed;
 
@@ -72,6 +72,11 @@ public abstract class AIController : Unit
         while (_currentPatrolPoint == null)
         {
             LookForNewPatrolPoint();
+            
+            //set Idle animation
+            ani.SetFloat("Horizontal", 0, 0.05f, Time.deltaTime);
+            ani.SetFloat("Vertical", 0, 0.05f, Time.deltaTime);
+            
             yield return null;
         }
         SetState(AIState.Roam);
@@ -86,6 +91,12 @@ public abstract class AIController : Unit
         {
             DetectEnemies();
             ResetPatrolPointChance();
+            
+            //set Roam animation
+            ani.SetFloat("Horizontal", 0, 0.05f, Time.deltaTime);   
+            ani.SetFloat("Vertical", 1, 0.05f, Time.deltaTime);
+            ani.SetBool("isRunning", false);
+            ani.SetBool("FireBool",false);
             yield return null;
         }
 
@@ -105,6 +116,10 @@ public abstract class AIController : Unit
         {
             _agent.SetDestination(_currentEnemy.transform.position);
             _chaseTimer += Time.deltaTime;
+            
+            //set Chase animation
+            ani.SetBool("isRunning", true);
+            ani.SetBool("FireBool",false);
             yield return null;
         }
 
@@ -128,6 +143,9 @@ public abstract class AIController : Unit
             transform.LookAt(_currentEnemy.transform);
             transform.localEulerAngles = new Vector3(0.0f, transform.localEulerAngles.y, 0.0f);
             AttackEnemy();
+            //set Attack animation
+            ani.SetBool("isRunning", false);
+            ani.SetBool("FireBool",true);
             yield return null;
         }
 
@@ -200,12 +218,14 @@ public abstract class AIController : Unit
 
     protected override void Die()
     {
-        //////dying animation
-
+        //set death animation
+        ani.SetTrigger(("DeadTrigger"));
+        
         Audio sound = Instantiate(DeathAudioPrefab);
         sound.transform.position = transform.position;
-
+        
         this.enabled = false;
-        Destroy(this.gameObject);
+        //delay 2s to destory the AI
+        Destroy(this.gameObject, 2f);
     }
 }

@@ -37,9 +37,9 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] public Audio DeathAudioPrefab;
 
     protected float _currentSpeed;
-    [SerializeField] public float MovementSpeed = 1.5f;
-    [SerializeField] public float SprintSpeed = 3.5f;
-    [SerializeField] public float CrouchSpeed = 2.5f;
+    [SerializeField] public float MovementSpeed = 3f;
+    [SerializeField] public float SprintSpeed =6f;
+    [SerializeField] public float CrouchSpeed = 2f;
     [SerializeField] public float CrouchHeightRatio = 0.5f;
     [SerializeField] public float CrouchSmoothness = 10.0f;
     [SerializeField] public float SlideSpeed = 7.5f;
@@ -54,7 +54,7 @@ public abstract class Unit : MonoBehaviour
     {
         //get components
         _rigidbody = GetComponent<Rigidbody>();
-
+        //_rigidbody.isKinematic = true;
         //initialize speed
         _currentSpeed = MovementSpeed;
 

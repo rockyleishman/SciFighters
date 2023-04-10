@@ -107,15 +107,16 @@ MonoBehaviour:
   Hurt2AudioPrefab: {fileID: 8953094202857078631, guid: 68178d0f36f0e0944b81b32849c9d8a0, type: 3}
   Hurt3AudioPrefab: {fileID: 8953094202857078631, guid: dac5b2778eadd5a4ead5ab0865421e50, type: 3}
   DeathAudioPrefab: {fileID: 8953094202857078631, guid: f5b0978f0e0d65347ba5c831dc38c673, type: 3}
-  MovementSpeed: 5
-  SprintSpeed: 7.5
-  CrouchSpeed: 2.5
+  MovementSpeed: 3
+  SprintSpeed: 6
+  CrouchSpeed: 2
   CrouchHeightRatio: 0.5
   CrouchSmoothness: 10
   SlideSpeed: 7.5
   SlideTime: 0.5
   SlideCooldown: 1
   JumpVelocity: 5
+  ani: {fileID: 0}
   ViewAngle: 75
   AimAngle: 5
   DetectionDistance: 25
@@ -217,6 +218,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SK_Character_Alien_Male_01
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 72ec116989aba2c46b76b08d5ec7906b, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3a29d7e1166b4f54ab1064b8432debb5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72ec116989aba2c46b76b08d5ec7906b, type: 3}
 --- !u!4 &1049338097847791613 stripped

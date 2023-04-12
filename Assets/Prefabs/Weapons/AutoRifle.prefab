@@ -52,7 +52,7 @@ MonoBehaviour:
   DryFireAudioPrefab: {fileID: 6654538478513543587, guid: 80467a438e3eb8544be8f57aa9e3448b, type: 3}
   Damage: 5
   Inaccuracy: 5
-  Cooldown: 0.2
+  Cooldown: 0.1
   MagazineSize: 50
   ReloadTime: 2
   IsAutomatic: 1

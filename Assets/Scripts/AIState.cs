@@ -7,5 +7,6 @@ internal enum AIState
     Idle,
     Roam,
     Chase,
-    Attack
+    Attack,
+    Dying
 }

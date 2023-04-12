@@ -63,6 +63,9 @@ public class AIController : Unit
             case AIState.Attack:
                 StartCoroutine(OnAttack());
                 break;
+            case AIState.Dying:
+                //no more coroutines when dying
+                break;
             case AIState.Idle:
             default:
                 StartCoroutine(OnIdle());
@@ -257,14 +260,17 @@ public class AIController : Unit
 
     protected override void Die()
     {
+        //set dying state
+        SetState(AIState.Dying);
+
         //set death animation
         ani.SetTrigger(("DeadTrigger"));
         
         Audio sound = Instantiate(DeathAudioPrefab);
         sound.transform.position = transform.position;
-        
-        this.enabled = false;
+
         //delay 2s to destory the AI
+        this.enabled = false;
         Destroy(this.gameObject, 2f);
     }
 }

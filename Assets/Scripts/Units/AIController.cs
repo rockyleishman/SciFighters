@@ -39,6 +39,10 @@ public class AIController : Unit
 
         _chaseTimer = 0.0f;
         _attackTimer = 0.0f;
+
+        //equip weapon
+        _equipedWeaponSlot = 0;
+        EquipWeapon();
     }
 
     void Update()

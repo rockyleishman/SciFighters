@@ -46,6 +46,10 @@ public class PlayerController : Unit
         {
             gun.transform.localScale = Vector3.zero;
         }
+
+        //equip weapon
+        _equipedWeaponSlot = 0;
+        EquipWeapon();
     }
 
     private void Update()

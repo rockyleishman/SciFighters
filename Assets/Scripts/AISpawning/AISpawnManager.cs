@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AISpawnManager : MonoBehaviour
@@ -29,7 +30,7 @@ public class AISpawnManager : MonoBehaviour
 
     private void Update()
     {
-        foreach (SpawnWave wave in SpawnWaves)
+        foreach (SpawnWave wave in SpawnWaves.Reverse<SpawnWave>())
         {
             if (GameManager.Instance.GameTime >= wave.SpawnTime)
             {

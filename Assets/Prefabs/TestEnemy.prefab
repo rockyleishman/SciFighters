@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 650002746983453582}
   m_Layer: 0
   m_Name: TestEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,7 +112,7 @@ MonoBehaviour:
   SprintSpeed: 7.5
   CrouchSpeed: 2.5
   CrouchHeightRatio: 0.5
-  CrouchSmoothness: 10
+  CrouchCameraSpeed: 5
   SlideSpeed: 7.5
   SlideTime: 0.5
   SlideCooldown: 1

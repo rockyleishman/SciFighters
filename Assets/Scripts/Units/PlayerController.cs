@@ -18,6 +18,7 @@ public class PlayerController : Unit
     protected bool _isSliding = false;
     protected bool _isSlideCooling = false;
     private bool _isJumping = false;
+    private bool _cursorIsLocked=true;
 
     protected override void Start()
     {
@@ -49,7 +50,8 @@ public class PlayerController : Unit
     {
         //rotate camera
         _cameraPivot.Rotate(-Input.GetAxis("Mouse Y") * MouseSensitivityY, 0, 0);
-
+       //lock mouse
+        InternalLockUpdate();
         //disallow other movement if dead
         if (!IsAlive)
         {
@@ -198,7 +200,9 @@ public class PlayerController : Unit
         transform.Rotate(0, Input.GetAxis("Mouse X") * MouseSensitivityX, 0);
 
     }
-
+/// <summary>
+/// lock mouse
+/// </summary>
     protected override void Die()
     {
         Audio sound = Instantiate(DeathAudioPrefab);
@@ -207,5 +211,27 @@ public class PlayerController : Unit
         //////open menu, show score, restart or quit
 
         //player is now dead
+    }
+    private void InternalLockUpdate()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            _cursorIsLocked = false;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            _cursorIsLocked = true;
+        }
+
+        if (_cursorIsLocked)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else if (!_cursorIsLocked)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 }

@@ -17,11 +17,14 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
-    
+
+
     internal PatrolPoint[] LevelPatrolPoints { get; private set; }
 
     void OnCreateInstance()
     {
         LevelPatrolPoints = GetComponentsInChildren<PatrolPoint>();
     }
+    
+    
 }

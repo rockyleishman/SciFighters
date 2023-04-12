@@ -11,8 +11,9 @@ public abstract class AIController : Unit
     [SerializeField] public Animator ani;     // define the animator
     [SerializeField] public float ViewAngle = 75.0f;
     [SerializeField] public float AimAngle = 5.0f;
-    [SerializeField] public float DetectionDistance = 25.0f;
-    [SerializeField] public float ChaseDistance = 50.0f;
+    [SerializeField] public float SightDetectionDistance = 30.0f;
+    [SerializeField] public float OtherSenseDetectionDistance = 15.0f;
+    [SerializeField] public float ChaseDistance = 45.0f;
     [SerializeField] public float ChaseTime = 30.0f;
     private float _chaseTimer;
 
@@ -29,7 +30,10 @@ public abstract class AIController : Unit
     protected override void Start()
     {
         base.Start();
-        ani = this.GetComponentInChildren<Animator>();  //get the animator in child
+
+        //get the animator in child
+        ani = this.GetComponentInChildren<Animator>();
+        
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = MovementSpeed;
 
@@ -180,9 +184,6 @@ public abstract class AIController : Unit
         //cannot see if not within view angle
         if (Vector3.Angle(transform.forward, target.position - eye.position) > viewAngle)
         {
-            ////////
-            Debug.Log("out of view angle");
-
             return false;
         }
 
@@ -205,13 +206,27 @@ public abstract class AIController : Unit
  
     private void DetectEnemies()
     {
-        //detect enemies
-        Collider[] surroundingColliders = Physics.OverlapSphere(this.transform.position, DetectionDistance);
+        //sight
+        Collider[] surroundingColliders = Physics.OverlapSphere(this.transform.position, SightDetectionDistance);
         foreach (Collider collider in surroundingColliders)
         {
             Unit unit = collider.GetComponentInParent<Unit>();
 
             if (unit != null && unit != this && unit.UnitFaction != UnitFaction && unit.IsAlive && CanSeeTarget(unit.transform, Eye, ViewAngle))
+            {
+                _currentEnemy = unit;
+                SetState(AIState.Chase);
+                break; //lock onto first enemy detected, ignore the rest
+            }
+        }
+
+        //other senses
+        surroundingColliders = Physics.OverlapSphere(this.transform.position, OtherSenseDetectionDistance);
+        foreach (Collider collider in surroundingColliders)
+        {
+            Unit unit = collider.GetComponentInParent<Unit>();
+
+            if (unit != null && unit != this && unit.UnitFaction != UnitFaction && unit.IsAlive)
             {
                 _currentEnemy = unit;
                 SetState(AIState.Chase);

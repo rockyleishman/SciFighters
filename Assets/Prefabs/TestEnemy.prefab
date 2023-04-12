@@ -120,8 +120,9 @@ MonoBehaviour:
   ani: {fileID: 0}
   ViewAngle: 75
   AimAngle: 5
-  DetectionDistance: 25
-  ChaseDistance: 50
+  SightDetectionDistance: 30
+  OtherSenseDetectionDistance: 15
+  ChaseDistance: 45
   ChaseTime: 30
   PatrolPointReachedRadius: 5
   PatrolPointSwitchAverageSeconds: 15

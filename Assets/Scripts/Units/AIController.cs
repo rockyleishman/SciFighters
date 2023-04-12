@@ -193,8 +193,6 @@ public abstract class AIController : Unit
             //cannot see if something is in the way
             if (hit.transform != target)
             {
-                Debug.Log("something in the way");
-
                 return false;
             }
         }

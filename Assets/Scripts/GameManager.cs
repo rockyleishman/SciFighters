@@ -18,13 +18,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     internal PatrolPoint[] LevelPatrolPoints { get; private set; }
 
-    void OnCreateInstance()
+    internal float GameTime { get; private set; }
+
+    [SerializeField] public PlayerController Player;
+
+    private void OnCreateInstance()
     {
+        //get array of patrol points for AI navigation
         LevelPatrolPoints = GetComponentsInChildren<PatrolPoint>();
+
+        //init game time
+        GameTime = 0.0f;
     }
-    
-    
+
+    private void Update()
+    {
+        GameTime += Time.deltaTime;
+    }
+
+    internal void ResetGameTime()
+    {
+        GameTime = 0.0f;
+    }
 }

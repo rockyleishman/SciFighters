@@ -9,7 +9,7 @@ public abstract class Unit : MonoBehaviour
     internal int MaxHealth { get; private protected set; }
     internal int Health { get; private protected set; }
 
-    internal Faction UnitFaction;
+    [SerializeField] public Faction UnitFaction;
 
     protected Rigidbody _rigidbody;
 
@@ -29,7 +29,7 @@ public abstract class Unit : MonoBehaviour
     internal bool IsAlive { get; private protected set; }
 
     [SerializeField] public float TriggerDelay = 1.0f;
-    [SerializeField] public float MaxInaccuracyDegrees = 15.0f;
+    [SerializeField] public float MaxInaccuracyDegrees = 10.0f;
 
     [SerializeField] public Audio Hurt1AudioPrefab;
     [SerializeField] public Audio Hurt2AudioPrefab;
@@ -41,7 +41,6 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] public float SprintSpeed = 7.5f;
     [SerializeField] public float CrouchSpeed = 2.5f;
     [SerializeField] public float CrouchHeightRatio = 0.6f;
-    [SerializeField] public float CrouchCameraSpeed = 5.0f;
     [SerializeField] public float SlideSpeed = 7.5f;
     [SerializeField] public float SlideTime = 0.5f;
     [SerializeField] public float SlideCooldown = 1.0f; //cools down from slide activation (not slide completion), prevents slide spamming
@@ -249,7 +248,7 @@ public abstract class Unit : MonoBehaviour
 
         Ray ray = new Ray(Eye.position, laserDirection);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~LayerMask.GetMask("Trigger")))
         {
             //hit something
             DrawLaser(_gunTip.position, hit.point, laserColor);

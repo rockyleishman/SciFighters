@@ -30,7 +30,7 @@ public class AISpawnManager : MonoBehaviour
 
     private void Update()
     {
-        foreach (SpawnWave wave in SpawnWaves.Reverse<SpawnWave>())
+        foreach (SpawnWave wave in SpawnWaves)
         {
             if (GameManager.Instance.GameTime >= wave.SpawnTime)
             {
@@ -48,6 +48,14 @@ public class AISpawnManager : MonoBehaviour
                 SpawnSpawnWave(wave, spawnTransform);
             }
         }
+
+        foreach (SpawnWave wave in SpawnWaves.Reverse<SpawnWave>())
+        {
+            if (wave.isSpawned)
+            {
+                SpawnWaves.Remove(wave);
+            }
+        }
     }
 
     private void SpawnSpawnWave(SpawnWave wave, Transform spawnTransform)
@@ -57,7 +65,7 @@ public class AISpawnManager : MonoBehaviour
             SpawnAI(AIPrefabs[i], spawnTransform);
         }
 
-        SpawnWaves.Remove(wave);
+        wave.isSpawned = true;
 
         ////////
         Debug.Log("Wave Spawned");

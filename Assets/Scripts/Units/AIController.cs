@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class AIController : Unit
+public class AIController : Unit
 {
     private NavMeshAgent _agent;
 
@@ -14,15 +14,13 @@ public abstract class AIController : Unit
     [SerializeField] public float SightDetectionDistance = 30.0f;
     [SerializeField] public float OtherSenseDetectionDistance = 15.0f;
     [SerializeField] public float ChaseDistance = 45.0f;
-    [SerializeField] public float ChaseTime = 30.0f;
+    [SerializeField] public float ChaseTime = 15.0f;
     private float _chaseTimer;
 
-    [SerializeField] public float PatrolPointReachedRadius = 5.0f;
+    [SerializeField] public float PatrolPointReachedRadius = 3.0f;
     [SerializeField] [Range(0.0f, 60.0f)] public float PatrolPointSwitchAverageSeconds = 10.0f;
 
-    [SerializeField] public float PrimaryDamage = 10.0f;
-    [SerializeField] public float SecondaryDamage = 50.0f;
-    [SerializeField] public float MeleeDamage = 10.0f;
+    private float _attackTimer;
 
     private PatrolPoint _currentPatrolPoint;
     private Unit _currentEnemy;
@@ -40,6 +38,7 @@ public abstract class AIController : Unit
         SetState(AIState.Idle);
 
         _chaseTimer = 0.0f;
+        _attackTimer = 0.0f;
     }
 
     void Update()
@@ -199,9 +198,22 @@ public abstract class AIController : Unit
 
         return true;
     }
+    
+    protected void AttackEnemy()
+    {
+        _attackTimer += Time.deltaTime;
 
-    protected abstract void AttackEnemy();
- 
+        if (_attackTimer > TriggerDelay)
+        {
+            _attackTimer = 0.0f;
+
+            if (!_equipedWeapon.Fire(this))
+            {
+                _equipedWeapon.Reload(UnloadedAmmo);
+            }
+        }
+    }
+
     private void DetectEnemies()
     {
         //sight

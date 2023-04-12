@@ -41,9 +41,9 @@ GameObject:
   m_Component:
   - component: {fileID: 650002746983453581}
   - component: {fileID: 650002746983453580}
-  - component: {fileID: 650002746983453577}
   - component: {fileID: 650002746983453583}
   - component: {fileID: 650002746983453582}
+  - component: {fileID: 8327230060049644041}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Enemy
@@ -84,51 +84,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &650002746983453577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650002746983453590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e696e5988033ec24fac7e8d67fddcb6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BaseMaxHealth: 50
-  Eye: {fileID: 650002746272904378}
-  Weapons:
-  - {fileID: 6388420154412322896}
-  UnloadedAmmo: 50000
-  LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
-  TriggerDelay: 1
-  MaxInaccuracyDegrees: 10
-  Hurt1AudioPrefab: {fileID: 8953094202857078631, guid: e6ededa9a5e3e6749b4b07690b5377ba, type: 3}
-  Hurt2AudioPrefab: {fileID: 8953094202857078631, guid: 68178d0f36f0e0944b81b32849c9d8a0, type: 3}
-  Hurt3AudioPrefab: {fileID: 8953094202857078631, guid: dac5b2778eadd5a4ead5ab0865421e50, type: 3}
-  DeathAudioPrefab: {fileID: 8953094202857078631, guid: f5b0978f0e0d65347ba5c831dc38c673, type: 3}
-  MovementSpeed: 5
-  SprintSpeed: 7.5
-  CrouchSpeed: 2.5
-  CrouchHeightRatio: 0.5
-  CrouchCameraSpeed: 5
-  SlideSpeed: 7.5
-  SlideTime: 0.5
-  SlideCooldown: 1
-  JumpVelocity: 5
-  ani: {fileID: 0}
-  ViewAngle: 75
-  AimAngle: 5
-  SightDetectionDistance: 30
-  OtherSenseDetectionDistance: 15
-  ChaseDistance: 45
-  ChaseTime: 30
-  PatrolPointReachedRadius: 5
-  PatrolPointSwitchAverageSeconds: 15
-  PrimaryDamage: 10
-  SecondaryDamage: 50
-  MeleeDamage: 10
 --- !u!195 &650002746983453583
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -165,6 +120,48 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8327230060049644041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650002746983453590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 626b3434c7887074a9e5807e77c5bdb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BaseMaxHealth: 50
+  UnitFaction: 1
+  Eye: {fileID: 650002746272904378}
+  Weapons:
+  - {fileID: 6388420154412322896}
+  UnloadedAmmo: 50000
+  LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
+  TriggerDelay: 1
+  MaxInaccuracyDegrees: 15
+  Hurt1AudioPrefab: {fileID: 8953094202857078631, guid: e6ededa9a5e3e6749b4b07690b5377ba, type: 3}
+  Hurt2AudioPrefab: {fileID: 8953094202857078631, guid: 68178d0f36f0e0944b81b32849c9d8a0, type: 3}
+  Hurt3AudioPrefab: {fileID: 8953094202857078631, guid: dac5b2778eadd5a4ead5ab0865421e50, type: 3}
+  DeathAudioPrefab: {fileID: 8953094202857078631, guid: f5b0978f0e0d65347ba5c831dc38c673, type: 3}
+  MovementSpeed: 5
+  SprintSpeed: 7.5
+  CrouchSpeed: 2.5
+  CrouchHeightRatio: 0.6
+  SlideSpeed: 7.5
+  SlideTime: 0.5
+  SlideCooldown: 1
+  JumpVelocity: 5
+  ani: {fileID: 0}
+  ViewAngle: 75
+  AimAngle: 5
+  SightDetectionDistance: 30
+  OtherSenseDetectionDistance: 15
+  ChaseDistance: 45
+  ChaseTime: 30
+  PatrolPointReachedRadius: 3
+  PatrolPointSwitchAverageSeconds: 10
 --- !u!1001 &650002746992516809
 PrefabInstance:
   m_ObjectHideFlags: 0

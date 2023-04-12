@@ -11,6 +11,8 @@ public class PlayerController : Unit
     [SerializeField] public float MouseSensitivityX = 1.0f;
     [SerializeField] public float MouseSensitivityY = 1.0f;
 
+    [SerializeField] public float CrouchCameraSpeed = 5.0f;
+
     [SerializeField] public Audio WeaponChangeAudioPrefab;
 
     protected bool _isSprinting = false;

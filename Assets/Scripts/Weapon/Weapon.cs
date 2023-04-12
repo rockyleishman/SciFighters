@@ -9,7 +9,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] public Audio FireAudioPrefab;
     [SerializeField] public Audio DryFireAudioPrefab;
 
-    [SerializeField] public int Damage;
+    [SerializeField] public int DamagePerLaser;
+    [SerializeField] public int LasersPerShot;
     [SerializeField] public float Inaccuracy;
     [SerializeField] public float Cooldown;
     internal float CooldownTimer { get; private protected set; }
@@ -70,7 +71,10 @@ public class Weapon : MonoBehaviour
     {
         if (Ammo > 0 && CooldownTimer < 0.0f)
         {
-            user.FireLaser(Damage, Inaccuracy, LaserColor);
+            for (int i = 0; i < LasersPerShot; i++)
+            {
+                user.FireLaser(DamagePerLaser, Inaccuracy, LaserColor);
+            }
             Ammo--;
             CooldownTimer = Cooldown;
 

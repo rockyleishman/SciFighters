@@ -50,7 +50,8 @@ MonoBehaviour:
   ReloadAudioPrefab: {fileID: 7086950248243263236, guid: 9d37b8f4bcc4db944bc576fcf82d5ba6, type: 3}
   FireAudioPrefab: {fileID: 3934945465055741239, guid: a91b2ec4881f42e4e831d38bb764dc37, type: 3}
   DryFireAudioPrefab: {fileID: 6654538478513543587, guid: 80467a438e3eb8544be8f57aa9e3448b, type: 3}
-  Damage: 5
+  DamagePerLaser: 5
+  LasersPerShot: 1
   Inaccuracy: 5
   Cooldown: 0.1
   MagazineSize: 50

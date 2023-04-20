@@ -44,7 +44,7 @@ public class Weapon : MonoBehaviour
         }
         else if (playerAmmo < neededAmmo)
         {
-            Ammo = playerAmmo;
+            Ammo += playerAmmo;
             playerAmmo = 0;
 
             CooldownTimer = ReloadTime;

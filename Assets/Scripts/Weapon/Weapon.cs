@@ -67,7 +67,7 @@ public class Weapon : MonoBehaviour
     }
 
     //attempts to fire the gun and returns true if the gun was loaded
-    public bool Fire(Unit user)
+    public bool Fire(Unit user, bool unlimitedAmmo)
     {
         if (Ammo > 0 && CooldownTimer < 0.0f)
         {
@@ -75,7 +75,12 @@ public class Weapon : MonoBehaviour
             {
                 user.FireLaser(DamagePerLaser, Inaccuracy, LaserColor);
             }
-            Ammo--;
+
+            if (!unlimitedAmmo)
+            {
+                Ammo--;
+            }
+
             CooldownTimer = Cooldown;
 
             Audio sound = Instantiate(FireAudioPrefab);

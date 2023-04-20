@@ -194,7 +194,7 @@ public class AIController : Unit
         }
 
         //check if direct line of sight
-        if (Physics.Raycast(new Ray(eye.position, target.position - eye.position), out hit, Mathf.Infinity, ~LayerMask.GetMask("null")))
+        if (Physics.Raycast(new Ray(eye.position, target.position - eye.position), out hit, Mathf.Infinity, ~LayerMask.GetMask("null"), QueryTriggerInteraction.Ignore))
         {
             //cannot see if something is in the way
             if (hit.transform != target)
@@ -214,7 +214,7 @@ public class AIController : Unit
         {
             _attackTimer = 0.0f;
 
-            if (!EquipedWeapon.Fire(this))
+            if (!EquipedWeapon.Fire(this, false))
             {
                 EquipedWeapon.Reload(UnloadedAmmo);
             }
@@ -271,7 +271,7 @@ public class AIController : Unit
             IsAlive = false;
 
             //drop pickup
-            DropPickup();
+            DropPickups();
 
             //set dying state
             SetState(AIState.Dying);
@@ -284,7 +284,6 @@ public class AIController : Unit
             sound.transform.position = transform.position;
 
             //delay 2s to destory the AI
-            this.enabled = false;
             Destroy(this.gameObject, 2f);
         }
     }

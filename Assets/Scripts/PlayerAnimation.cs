@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
+    [SerializeField] public PlayerController playerController;
+
     private Animator ani;
     float horizontalInput ;
     float verticalInput ;
@@ -38,7 +40,7 @@ public class PlayerAnimation : MonoBehaviour
             else
             {
                 walk();
-                if (Input.GetKeyDown(KeyCode.Space) && GameManager.Instance.Player.IsGrounded())
+                if (Input.GetKeyDown(KeyCode.Space) && playerController.IsGrounded())
                 {
                     ani.SetBool("Crouch", false);
                     ani.SetTrigger("Jump");

@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3511599999528249425}
   - component: {fileID: 3511599999528249424}
+  - component: {fileID: 3511599999528249427}
   - component: {fileID: 1022732122504365146}
   - component: {fileID: 5775337324113135705}
-  - component: {fileID: 7257035003411365049}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -53,6 +53,48 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &3511599999528249427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3511599999528249429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd7f6878c600fab4e92c4889275d3ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BaseMaxHealth: 500
+  UnitFaction: 0
+  Eye: {fileID: 3511600000227418454}
+  Weapons:
+  - {fileID: 8862273392448012782}
+  - {fileID: 2218290707321301373}
+  - {fileID: 1414248498807748698}
+  - {fileID: 6080698642383223520}
+  UnloadedAmmo: 250
+  LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
+  DroppedPickups: []
+  PickupDropChance: 0
+  TriggerDelay: 0
+  MaxInaccuracyDegrees: 0
+  Hurt1AudioPrefab: {fileID: 8953094202857078631, guid: e6ededa9a5e3e6749b4b07690b5377ba, type: 3}
+  Hurt2AudioPrefab: {fileID: 8953094202857078631, guid: 68178d0f36f0e0944b81b32849c9d8a0, type: 3}
+  Hurt3AudioPrefab: {fileID: 8953094202857078631, guid: dac5b2778eadd5a4ead5ab0865421e50, type: 3}
+  DeathAudioPrefab: {fileID: 8953094202857078631, guid: f5b0978f0e0d65347ba5c831dc38c673, type: 3}
+  MovementSpeed: 5
+  SprintSpeed: 7.5
+  CrouchSpeed: 2.5
+  CrouchHeightRatio: 0.6
+  SlideSpeed: 7.5
+  SlideTime: 0.5
+  SlideCooldown: 1
+  JumpVelocity: 5
+  MouseSensitivityX: 2
+  MouseSensitivityY: 2
+  CrouchCameraSpeed: 5
+  WeaponChangeAudioPrefab: {fileID: 8953094202857078631, guid: 240e1831a9dab414fa07a98d6eb0a0a7, type: 3}
 --- !u!136 &1022732122504365146
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -80,56 +122,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.25
   m_Center: {x: 0, y: 1.675, z: 0}
---- !u!114 &7257035003411365049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3511599999528249429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd7f6878c600fab4e92c4889275d3ea6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BaseMaxHealth: 500
-  UnitFaction: 0
-  Eye: {fileID: 3511599999816499266}
-  Weapons:
-  - {fileID: 8862273392448012782}
-  - {fileID: 2218290707321301373}
-  - {fileID: 6080698642383223520}
-  - {fileID: 1414248498807748698}
-  UnloadedAmmo: 250
-  LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
-  DroppedPickups: []
-  EachPickupDropChance: 0
-  PickupDropRadius: 0.5
-  DroppedPowerups: []
-  SinglePowerupDropChance: 0
-  TriggerDelay: 0
-  MaxInaccuracyDegrees: 0
-  Hurt1AudioPrefab: {fileID: 8953094202857078631, guid: e6ededa9a5e3e6749b4b07690b5377ba, type: 3}
-  Hurt2AudioPrefab: {fileID: 8953094202857078631, guid: 68178d0f36f0e0944b81b32849c9d8a0, type: 3}
-  Hurt3AudioPrefab: {fileID: 8953094202857078631, guid: dac5b2778eadd5a4ead5ab0865421e50, type: 3}
-  DeathAudioPrefab: {fileID: 8953094202857078631, guid: f5b0978f0e0d65347ba5c831dc38c673, type: 3}
-  MovementSpeed: 5
-  SprintSpeed: 7.5
-  CrouchSpeed: 2.5
-  CrouchHeightRatio: 0.6
-  SlideSpeed: 7.5
-  SlideTime: 0.5
-  SlideCooldown: 1
-  JumpVelocity: 5
-  MouseSensitivityX: 1
-  MouseSensitivityY: 1
-  HeadYPosition: 1.675
-  BodyHeight: 1.75
-  CrouchBodyHeight: 1
-  CrouchCameraSpeed: 5
-  WeaponChangeAudioPrefab: {fileID: 8953094202857078631, guid: 240e1831a9dab414fa07a98d6eb0a0a7, type: 3}
-  PowerSpeedMultiplier: 1.5
-  PowerDamageMultiplier: 2
 --- !u!1 &3511599999816499267
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,18 +315,6 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6092927675778876000, guid: 313d93749908f004ebe7cb3c11f70287, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6092927675778876000, guid: 313d93749908f004ebe7cb3c11f70287, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6092927675778876000, guid: 313d93749908f004ebe7cb3c11f70287, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6092927675778876000, guid: 313d93749908f004ebe7cb3c11f70287, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.092
       objectReference: {fileID: 0}
@@ -505,18 +485,6 @@ PrefabInstance:
     - target: {fileID: 6092927675778876000, guid: 79c34bc032811ce4fa24caaad6bfc8c6, type: 3}
       propertyPath: m_RootOrder
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6092927675778876000, guid: 79c34bc032811ce4fa24caaad6bfc8c6, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6092927675778876000, guid: 79c34bc032811ce4fa24caaad6bfc8c6, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6092927675778876000, guid: 79c34bc032811ce4fa24caaad6bfc8c6, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6092927675778876000, guid: 79c34bc032811ce4fa24caaad6bfc8c6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -953,6 +921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d4d6c34429b984f8fc3c0debec2f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 3511599999528249427}
 --- !u!4 &974326428834506586 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5124541495474518313, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
@@ -981,18 +950,6 @@ PrefabInstance:
     - target: {fileID: 3166433511919782144, guid: d8867a1444fbc1d46ac805f29aa253b1, type: 3}
       propertyPath: m_RootOrder
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3166433511919782144, guid: d8867a1444fbc1d46ac805f29aa253b1, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3166433511919782144, guid: d8867a1444fbc1d46ac805f29aa253b1, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3166433511919782144, guid: d8867a1444fbc1d46ac805f29aa253b1, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3166433511919782144, guid: d8867a1444fbc1d46ac805f29aa253b1, type: 3}
       propertyPath: m_LocalPosition.x

@@ -214,9 +214,9 @@ public class AIController : Unit
         {
             _attackTimer = 0.0f;
 
-            if (!_equipedWeapon.Fire(this))
+            if (!EquipedWeapon.Fire(this))
             {
-                _equipedWeapon.Reload(UnloadedAmmo);
+                EquipedWeapon.Reload(UnloadedAmmo);
             }
         }
     }
@@ -264,6 +264,8 @@ public class AIController : Unit
 
     protected override void Die()
     {
+        DropPickup();
+
         //set dying state
         SetState(AIState.Dying);
 

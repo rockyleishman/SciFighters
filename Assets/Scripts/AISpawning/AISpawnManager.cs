@@ -7,7 +7,7 @@ public class AISpawnManager : MonoBehaviour
 {
     private static AISpawnManager _instance;
 
-    public static AISpawnManager Instance
+    internal static AISpawnManager Instance
     {
         get
         {

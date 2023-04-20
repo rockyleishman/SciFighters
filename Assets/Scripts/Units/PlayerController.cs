@@ -145,7 +145,7 @@ public class PlayerController : Unit
             _cameraPivot.localPosition = Vector3.MoveTowards(_cameraPivot.localPosition, _cameraPivotStandingPosition, Time.deltaTime * CrouchCameraSpeed);
         }
 
-        //switch weapon
+        //switch weapon forward
         if (Input.GetKeyDown(KeyCode.E))
         {
             _equipedWeaponSlot++;
@@ -156,24 +156,260 @@ public class PlayerController : Unit
 
             EquipWeapon();
 
+            UIManager.Instance.UpdateGun();
+
             Audio sound = Instantiate(WeaponChangeAudioPrefab);
             sound.transform.position = transform.position;
+        }
+
+        //switch weapon backward
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            _equipedWeaponSlot--;
+            if (_equipedWeaponSlot < 0)
+            {
+                _equipedWeaponSlot = Weapons.Length - 1;
+            }
+
+            EquipWeapon();
+
+            UIManager.Instance.UpdateGun();
+
+            Audio sound = Instantiate(WeaponChangeAudioPrefab);
+            sound.transform.position = transform.position;
+        }
+
+        //switch to weapon 1
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            try
+            {
+                _equipedWeaponSlot = 0;
+
+                EquipWeapon();
+
+                UIManager.Instance.UpdateGun();
+
+                Audio sound = Instantiate(WeaponChangeAudioPrefab);
+                sound.transform.position = transform.position;
+            }
+            catch
+            {
+                //player has no weapons
+                //do nothing
+            }
+        }
+
+        //switch to weapon 2
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            try
+            {
+                _equipedWeaponSlot = 1;
+
+                EquipWeapon();
+
+                UIManager.Instance.UpdateGun();
+
+                Audio sound = Instantiate(WeaponChangeAudioPrefab);
+                sound.transform.position = transform.position;
+            }
+            catch
+            {
+                //player doesn't have 2 weapons
+                //do nothing
+            }
+        }
+
+        //switch to weapon 3
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            try
+            {
+                _equipedWeaponSlot = 2;
+
+                EquipWeapon();
+
+                UIManager.Instance.UpdateGun();
+
+                Audio sound = Instantiate(WeaponChangeAudioPrefab);
+                sound.transform.position = transform.position;
+            }
+            catch
+            {
+                //player doesn't have 3 weapons
+                //do nothing
+            }
+        }
+
+        //switch to weapon 4
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            try
+            {
+                _equipedWeaponSlot = 3;
+
+                EquipWeapon();
+
+                UIManager.Instance.UpdateGun();
+
+                Audio sound = Instantiate(WeaponChangeAudioPrefab);
+                sound.transform.position = transform.position;
+            }
+            catch
+            {
+                //player doesn't have 4 weapons
+                //do nothing
+            }
+        }
+
+        //switch to weapon 5
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            try
+            {
+                _equipedWeaponSlot = 4;
+
+                EquipWeapon();
+
+                UIManager.Instance.UpdateGun();
+
+                Audio sound = Instantiate(WeaponChangeAudioPrefab);
+                sound.transform.position = transform.position;
+            }
+            catch
+            {
+                //player doesn't have 5 weapons
+                //do nothing
+            }
+        }
+
+        //switch to weapon 6
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            try
+            {
+                _equipedWeaponSlot = 5;
+
+                EquipWeapon();
+
+                UIManager.Instance.UpdateGun();
+
+                Audio sound = Instantiate(WeaponChangeAudioPrefab);
+                sound.transform.position = transform.position;
+            }
+            catch
+            {
+                //player doesn't have 6 weapons
+                //do nothing
+            }
+        }
+
+        //switch to weapon 7
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            try
+            {
+                _equipedWeaponSlot = 6;
+
+                EquipWeapon();
+
+                UIManager.Instance.UpdateGun();
+
+                Audio sound = Instantiate(WeaponChangeAudioPrefab);
+                sound.transform.position = transform.position;
+            }
+            catch
+            {
+                //player doesn't have 7 weapons
+                //do nothing
+            }
+        }
+
+        //switch to weapon 8
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            try
+            {
+                _equipedWeaponSlot = 7;
+
+                EquipWeapon();
+
+                UIManager.Instance.UpdateGun();
+
+                Audio sound = Instantiate(WeaponChangeAudioPrefab);
+                sound.transform.position = transform.position;
+            }
+            catch
+            {
+                //player doesn't have 8 weapons
+                //do nothing
+            }
+        }
+
+        //switch to weapon 9
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            try
+            {
+                _equipedWeaponSlot = 8;
+
+                EquipWeapon();
+
+                UIManager.Instance.UpdateGun();
+
+                Audio sound = Instantiate(WeaponChangeAudioPrefab);
+                sound.transform.position = transform.position;
+            }
+            catch
+            {
+                //player doesn't have 9 weapons
+                //do nothing
+            }
+        }
+
+        //switch to weapon 10
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            try
+            {
+                _equipedWeaponSlot = 9;
+
+                EquipWeapon();
+
+                UIManager.Instance.UpdateGun();
+
+                Audio sound = Instantiate(WeaponChangeAudioPrefab);
+                sound.transform.position = transform.position;
+            }
+            catch
+            {
+                //player doesn't have 10 weapons
+                //do nothing
+            }
         }
 
         //reload weapon
         if (Input.GetKeyDown(KeyCode.R))
         {
-            UnloadedAmmo = _equipedWeapon.Reload(UnloadedAmmo);
+            UnloadedAmmo = EquipedWeapon.Reload(UnloadedAmmo);
+
+            UIManager.Instance.UpdateGun();
+            UIManager.Instance.UpdateAmmo();
         }
 
         //fire weapon
-        if (Input.GetMouseButton(0) && _equipedWeapon.IsAutomatic)
+        if (Input.GetMouseButton(0) && EquipedWeapon.IsAutomatic)
         {
-            _equipedWeapon.Fire(this);
+            EquipedWeapon.Fire(this);
+
+            UIManager.Instance.UpdateGun();
         }
         else if (Input.GetMouseButtonDown(0))
         {
-            _equipedWeapon.Fire(this);
+            EquipedWeapon.Fire(this);
+
+            UIManager.Instance.UpdateGun();
         }
 
         //get movement input
@@ -240,4 +476,62 @@ public class PlayerController : Unit
             Cursor.visible = true;
         }
     }
+
+    #region Health System
+
+    internal override void Heal(int healAmount)
+    {
+        base.Heal(healAmount);
+        UIManager.Instance.UpdateHealth();
+    }
+
+    internal override void Damage(int damageAmount, Faction damagingFaction)
+    {
+        base.Damage(damageAmount, damagingFaction);
+        UIManager.Instance.UpdateHealth();
+    }
+
+    internal override void RestoreHealth()
+    {
+        base.RestoreHealth();
+        UIManager.Instance.UpdateHealth();
+    }
+
+    internal override void IncMaxHealth(int increaseAmount)
+    {
+        base.IncMaxHealth(increaseAmount);
+        UIManager.Instance.UpdateHealth();
+    }
+
+    internal override void DecMaxHealth(int decreaseAmount)
+    {
+        base.DecMaxHealth(decreaseAmount);
+        UIManager.Instance.UpdateHealth();
+    }
+
+    internal override void RevertMaxHealth()
+    {
+        base.RevertMaxHealth();
+        UIManager.Instance.UpdateHealth();
+    }
+
+    internal override void IncPermMaxHealth(int increaseAmount)
+    {
+        base.IncPermMaxHealth(increaseAmount);
+        UIManager.Instance.UpdateHealth();
+    }
+
+    internal override void DecPermMaxHealth(int decreaseAmount)
+    {
+        base.DecPermMaxHealth(decreaseAmount);
+        UIManager.Instance.UpdateHealth();
+    }
+
+    internal override void RevertPermMaxHealth()
+    {
+        base.RevertPermMaxHealth();
+        UIManager.Instance.UpdateHealth();
+    }
+
+    #endregion
 }

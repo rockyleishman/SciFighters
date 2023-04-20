@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-    public static GameManager Instance
+    internal static GameManager Instance
     {
         get
         {
@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
 
         //init game time
         GameTime = 0.0f;
+
+        //init UI
+        UIManager.Instance.UpdateUI();
     }
 
     private void Update()

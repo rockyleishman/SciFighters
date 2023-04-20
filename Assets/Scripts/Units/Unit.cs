@@ -17,12 +17,15 @@ public abstract class Unit : MonoBehaviour
     protected Transform _gunTip;
 
     [SerializeField] public Weapon[] Weapons;
-    protected Weapon _equipedWeapon;
+    internal Weapon EquipedWeapon { get; private protected set; }
     protected int _equipedWeaponSlot;
     [SerializeField] public int UnloadedAmmo;
 
     [SerializeField] public Laser LaserPrefab;
     private const float NoHitLaserLength = 500.0f;
+
+    [SerializeField] public Pickup[] DroppedPickups;
+    [SerializeField] [Range(0.0f, 1.0f)] public float PickupDropChance = 0.0f;
 
     private const float GroundRayLength = 0.1f;
 
@@ -78,7 +81,7 @@ public abstract class Unit : MonoBehaviour
     #region Health System Methods
 
     //to be called when healing damage
-    internal void Heal(int healAmount)
+    internal virtual void Heal(int healAmount)
     {
         Health += healAmount;
 
@@ -89,7 +92,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     //to be called when taking damage
-    internal void Damage(int damageAmount, Faction damagingFaction)
+    internal virtual void Damage(int damageAmount, Faction damagingFaction)
     {
         //cannot recieve damage from same faction
         if (damagingFaction != UnitFaction)
@@ -120,13 +123,13 @@ public abstract class Unit : MonoBehaviour
     }
 
     //to be called to restore all health
-    internal void RestoreHealth()
+    internal virtual void RestoreHealth()
     {
         Health = MaxHealth;
     }
 
     //to be called for max health power-ups
-    internal void IncMaxHealth(int increaseAmount)
+    internal virtual void IncMaxHealth(int increaseAmount)
     {
         MaxHealth += increaseAmount;
         
@@ -140,7 +143,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     //to be called for max health power-downs
-    internal void DecMaxHealth(int decreaseAmount)
+    internal virtual void DecMaxHealth(int decreaseAmount)
     {
         MaxHealth -= decreaseAmount;
 
@@ -155,7 +158,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     //to be called to remove all max health power-ups and power-downs
-    internal void RevertMaxHealth()
+    internal virtual void RevertMaxHealth()
     {
         MaxHealth = _permMaxHealth;
 
@@ -170,7 +173,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     //to be called for max health upgrades
-    internal void IncPermMaxHealth(int increaseAmount)
+    internal virtual void IncPermMaxHealth(int increaseAmount)
     {
         _permMaxHealth += increaseAmount;
         MaxHealth += increaseAmount;
@@ -189,7 +192,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     //to be called for max health downgrades
-    internal void DecPermMaxHealth(int decreaseAmount)
+    internal virtual void DecPermMaxHealth(int decreaseAmount)
     {
         _permMaxHealth -= decreaseAmount;
         MaxHealth -= decreaseAmount;
@@ -209,7 +212,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     //to be called to remove all max health power-ups, power-downs, upgrades, and downgrades
-    internal void RevertPermMaxHealth()
+    internal virtual void RevertPermMaxHealth()
     {
         _permMaxHealth = BaseMaxHealth;
         MaxHealth = BaseMaxHealth;
@@ -235,6 +238,13 @@ public abstract class Unit : MonoBehaviour
     }
 
     #endregion
+
+    public void AddAmmo(int amount)
+    {
+        UnloadedAmmo += amount;
+
+        //////pickup ammo sound
+    }
 
     #region Laser Methods
 
@@ -291,7 +301,7 @@ public abstract class Unit : MonoBehaviour
         //hide current weapon
         try
         {
-            _equipedWeapon.transform.localScale = Vector3.zero;
+            EquipedWeapon.transform.localScale = Vector3.zero;
         }
         catch
         { 
@@ -299,11 +309,25 @@ public abstract class Unit : MonoBehaviour
         }
 
         //equip new weapon
-        _equipedWeapon = Weapons[_equipedWeaponSlot];
-        _gunTip = _equipedWeapon.BarrelEnd;
+        EquipedWeapon = Weapons[_equipedWeaponSlot];
+        _gunTip = EquipedWeapon.BarrelEnd;
 
         //show new weapon
-        _equipedWeapon.transform.localScale = Vector3.one;
+        EquipedWeapon.transform.localScale = Vector3.one;
+    }
+
+    protected void DropPickup()
+    {
+        if (PickupDropChance > 0.0f)
+        {
+            int pickupIndex = Random.Range(0, DroppedPickups.Length);
+
+            if (Random.Range(0.0f, 1.0f) <= PickupDropChance)
+            {
+                Pickup droppedPickup = DroppedPickups[pickupIndex];
+                Instantiate(droppedPickup, transform.position, transform.rotation);
+            }
+        }
     }
 
     protected abstract void Die();

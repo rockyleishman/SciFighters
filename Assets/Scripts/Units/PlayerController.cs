@@ -447,12 +447,18 @@ public class PlayerController : Unit
 /// </summary>
     protected override void Die()
     {
-        Audio sound = Instantiate(DeathAudioPrefab);
-        sound.transform.position = transform.position;
+        //do once
+        if (IsAlive)
+        {
+            IsAlive = false;
 
-        //////open menu, show score, restart or quit
+            Audio sound = Instantiate(DeathAudioPrefab);
+            sound.transform.position = transform.position;
 
-        //player is now dead
+            //////open menu, show score, restart or quit
+
+            //player is now dead
+        }
     }
     private void InternalLockUpdate()
     {

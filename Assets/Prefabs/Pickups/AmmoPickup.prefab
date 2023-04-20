@@ -4873,8 +4873,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotationSpeed: 0.25
-  MinAmmoAmount: 20
-  MaxAmmoAmount: 40
+  MinAmmoAmount: 50
+  MaxAmmoAmount: 50
 --- !u!1001 &6286136709528792984
 PrefabInstance:
   m_ObjectHideFlags: 0

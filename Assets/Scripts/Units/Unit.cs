@@ -232,7 +232,6 @@ public abstract class Unit : MonoBehaviour
         if (Health <= 0)
         {
             Health = 0;
-            IsAlive = false;
             Die();
         }
     }
@@ -262,7 +261,15 @@ public abstract class Unit : MonoBehaviour
             Unit unitHit = hit.collider.GetComponentInParent<Unit>();
             if (unitHit != null)
             {
-                unitHit.Damage(damage, UnitFaction);
+                if (hit.collider is SphereCollider)
+                {
+                    //double damage for head shots (sphere collider)
+                    unitHit.Damage(damage * 2, UnitFaction);
+                }
+                else
+                {
+                    unitHit.Damage(damage, UnitFaction);
+                }
             }
         }
         else

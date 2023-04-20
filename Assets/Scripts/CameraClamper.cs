@@ -6,8 +6,8 @@ public class CameraClamper : MonoBehaviour
 {
     //this script should be attached to the camera pivot
 
-    [SerializeField] [Range(0.0f, 180.0f)] public float UpperClamp = 45.0f;
-    [SerializeField] [Range(-180.0f, 0.0f)] public float LowerClamp = -45.0f;
+    [SerializeField] [Range(0.0f, 180.0f)] public float UpperClamp = 75.0f;
+    [SerializeField] [Range(-180.0f, 0.0f)] public float LowerClamp = -75.0f;
 
     void LateUpdate()
     {

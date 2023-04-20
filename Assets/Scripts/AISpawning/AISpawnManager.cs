@@ -19,6 +19,7 @@ public class AISpawnManager : MonoBehaviour
         }
     }
 
+    [SerializeField] public float MinimumSpawnDistance = 40.0f; //if this is too high for the level size the game will crash
     [SerializeField] public AIController[] AIPrefabs;
     internal SpawnPoint[] SpawnPoints { get; private set; }
     [SerializeField] public List<SpawnWave> SpawnWaves;
@@ -36,15 +37,11 @@ public class AISpawnManager : MonoBehaviour
             {
                 Transform spawnTransform = GameManager.Instance.Player.transform;
 
-                //spawn far from player
-                foreach (SpawnPoint point in SpawnPoints)
+                while (Vector3.Distance(spawnTransform.position, GameManager.Instance.Player.transform.position) < MinimumSpawnDistance)
                 {
-                    if (Vector3.Distance(point.transform.position, GameManager.Instance.Player.transform.position) > Vector3.Distance(spawnTransform.position, GameManager.Instance.Player.transform.position))
-                    {
-                        spawnTransform = point.transform;
-                    }
+                    spawnTransform = SpawnPoints[Random.Range(0, SpawnPoints.Length)].transform;
                 }
-
+                
                 SpawnSpawnWave(wave, spawnTransform);
             }
         }

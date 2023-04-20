@@ -264,19 +264,28 @@ public class AIController : Unit
 
     protected override void Die()
     {
-        DropPickup();
+        //do once
+        if (IsAlive)
+        {
+            //no longer alive
+            IsAlive = false;
 
-        //set dying state
-        SetState(AIState.Dying);
+            //drop pickup
+            DropPickup();
 
-        //set death animation
-        ani.SetTrigger(("DeadTrigger"));
-        
-        Audio sound = Instantiate(DeathAudioPrefab);
-        sound.transform.position = transform.position;
+            //set dying state
+            SetState(AIState.Dying);
 
-        //delay 2s to destory the AI
-        this.enabled = false;
-        Destroy(this.gameObject, 2f);
+            //set death animation
+            ani.SetTrigger(("DeadTrigger"));
+
+            //death sound
+            Audio sound = Instantiate(DeathAudioPrefab);
+            sound.transform.position = transform.position;
+
+            //delay 2s to destory the AI
+            this.enabled = false;
+            Destroy(this.gameObject, 2f);
+        }
     }
 }

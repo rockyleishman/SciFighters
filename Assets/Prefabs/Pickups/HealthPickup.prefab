@@ -61,8 +61,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotationSpeed: 0.25
-  MinHealAmount: 30
-  MaxHealAmount: 60
+  MinHealAmount: 50
+  MaxHealAmount: 50
 --- !u!1 &5859948705179146874
 GameObject:
   m_ObjectHideFlags: 0

@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 650002746983453580}
   - component: {fileID: 650002746983453583}
   - component: {fileID: 650002746983453582}
+  - component: {fileID: 2188383581039410278}
   - component: {fileID: 8875768189205062956}
   m_Layer: 0
   m_Name: EnemyShotgunner
@@ -116,10 +117,23 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.25
+  m_Height: 1.5
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.25, z: 0}
+--- !u!135 &2188383581039410278
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650002746983453590}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Center: {x: 0, y: 0.675, z: 0}
 --- !u!114 &8875768189205062956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,8 +155,10 @@ MonoBehaviour:
   LaserPrefab: {fileID: 1327838800069757913, guid: 95b1e199d99052e47b6f7379219ec28e, type: 3}
   DroppedPickups:
   - {fileID: 6286136709475572214, guid: ec5c27220d2c5ba469f44ba22ed0daf1, type: 3}
+  - {fileID: 6286136709475572214, guid: ec5c27220d2c5ba469f44ba22ed0daf1, type: 3}
+  - {fileID: 6286136709475572214, guid: ec5c27220d2c5ba469f44ba22ed0daf1, type: 3}
   - {fileID: 5859948704106123674, guid: 3f29f94750972e544a7c69a869991a15, type: 3}
-  PickupDropChance: 0.1
+  PickupDropChance: 0.35
   TriggerDelay: 0.75
   MaxInaccuracyDegrees: 5
   Hurt1AudioPrefab: {fileID: 8953094202857078631, guid: e6ededa9a5e3e6749b4b07690b5377ba, type: 3}

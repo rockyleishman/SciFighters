@@ -25,7 +25,10 @@ public abstract class Unit : MonoBehaviour
     private const float NoHitLaserLength = 500.0f;
 
     [SerializeField] public Pickup[] DroppedPickups;
-    [SerializeField] [Range(0.0f, 1.0f)] public float PickupDropChance = 0.0f;
+    [SerializeField] [Range(0.0f, 1.0f)] public float EachPickupDropChance = 0.0f;
+    [SerializeField] public float PickupDropRadius = 0.5f;
+    [SerializeField] public Pickup[] DroppedPowerups;
+    [SerializeField] [Range(0.0f, 1.0f)] public float SinglePowerupDropChance = 0.0f;
 
     private const float GroundRayLength = 0.1f;
 
@@ -247,13 +250,13 @@ public abstract class Unit : MonoBehaviour
 
     #region Laser Methods
 
-    internal void FireLaser(int damage, float lazerInaccuracy, Color laserColor)
+    internal virtual void FireLaser(int damage, float lazerInaccuracy, Color laserColor)
     {
         Vector3 laserDirection = InaccurateDirection(Eye.forward, MaxInaccuracyDegrees + lazerInaccuracy);
 
         Ray ray = new Ray(Eye.position, laserDirection);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~LayerMask.GetMask("Trigger")))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~LayerMask.GetMask("Trigger"), QueryTriggerInteraction.Ignore))
         {
             //hit something
             DrawLaser(_gunTip.position, hit.point, laserColor);
@@ -323,16 +326,30 @@ public abstract class Unit : MonoBehaviour
         EquipedWeapon.transform.localScale = Vector3.one;
     }
 
-    protected void DropPickup()
+    protected void DropPickups()
     {
-        if (PickupDropChance > 0.0f)
+        //drop pickups
+        if (EachPickupDropChance > 0.0f)
         {
-            int pickupIndex = Random.Range(0, DroppedPickups.Length);
-
-            if (Random.Range(0.0f, 1.0f) <= PickupDropChance)
+            foreach (Pickup pickup in DroppedPickups)
             {
-                Pickup droppedPickup = DroppedPickups[pickupIndex];
-                Instantiate(droppedPickup, transform.position, transform.rotation);
+                if (Random.Range(0.0f, 1.0f) <= EachPickupDropChance)
+                {
+                    Instantiate(pickup, transform.position, transform.rotation);
+                }
+            }
+
+            
+        }
+
+        //drop a powerup
+        if (SinglePowerupDropChance > 0.0f)
+        {
+            int powerupIndex = Random.Range(0, DroppedPowerups.Length);
+
+            if (Random.Range(0.0f, 1.0f) <= SinglePowerupDropChance)
+            {
+                Instantiate(DroppedPowerups[powerupIndex], transform.position, transform.rotation);
             }
         }
     }

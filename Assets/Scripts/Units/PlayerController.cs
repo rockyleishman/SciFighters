@@ -11,9 +11,6 @@ public class PlayerController : Unit
     [SerializeField] public float MouseSensitivityX = 1.0f;
     [SerializeField] public float MouseSensitivityY = 1.0f;
 
-    [SerializeField] public float HeadYPosition = 1.675f;
-    [SerializeField] public float BodyHeight = 1.75f;
-    [SerializeField] public float CrouchBodyHeight = 1.0f;
     [SerializeField] public float CrouchCameraSpeed = 5.0f;
 
     [SerializeField] public Audio WeaponChangeAudioPrefab;
@@ -24,13 +21,6 @@ public class PlayerController : Unit
     protected bool _isSlideCooling = false;
     private bool _isJumping = false;
     private bool _cursorIsLocked=true;
-
-    [SerializeField] public float PowerSpeedMultiplier = 1.5f;
-    [SerializeField] public float PowerDamageMultiplier = 2.0f;
-    private float _powerSpeedTimer;
-    private float _powerDamageTimer;
-    private float _powerInvincibilityTimer;
-    private float _powerUnlimitedAmmoTimer;
 
     protected override void Start()
     {
@@ -60,22 +50,10 @@ public class PlayerController : Unit
         //equip weapon
         _equipedWeaponSlot = 0;
         EquipWeapon();
-
-        //init power up timers
-        _powerSpeedTimer = 0.0f;
-        _powerDamageTimer = 0.0f;
-        _powerInvincibilityTimer = 0.0f;
-        _powerUnlimitedAmmoTimer = 0.0f;
     }
 
     private void Update()
     {
-        //decrease power up timers
-        _powerSpeedTimer -= Time.deltaTime;
-        _powerDamageTimer -= Time.deltaTime;
-        _powerInvincibilityTimer -= Time.deltaTime;
-        _powerUnlimitedAmmoTimer -= Time.deltaTime;
-
         //rotate camera
         _cameraPivot.Rotate(-Input.GetAxis("Mouse Y") * MouseSensitivityY, 0, 0);
        //lock mouse
@@ -91,9 +69,16 @@ public class PlayerController : Unit
         {
             _isJumping = false;
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (UIManager.Instance.IsPlayGame)
+            {
+                UIManager.Instance.Pause();
+            }
+        }
 
-        //toggle crouch
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+            //toggle crouch
+            if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             if (_isCrouching)
             {
@@ -157,25 +142,15 @@ public class PlayerController : Unit
             _isSliding = false;
         }
 
-        //change heights for crouching
+        //change camera height for crouching
         if (_isCrouching)
         {
             _cameraPivot.localPosition = Vector3.MoveTowards(_cameraPivot.localPosition, _cameraPivotCrouchingPosition, Time.deltaTime * CrouchCameraSpeed);
-
-            GetComponent<CapsuleCollider>().height = CrouchBodyHeight;
-            GetComponent<CapsuleCollider>().center = new Vector3(0.0f, CrouchBodyHeight / 2.0f, 0.0f);
-            GetComponent<SphereCollider>().center = new Vector3(0.0f, HeadYPosition - BodyHeight + CrouchBodyHeight, 0.0f);
         }
         else
         {
             _cameraPivot.localPosition = Vector3.MoveTowards(_cameraPivot.localPosition, _cameraPivotStandingPosition, Time.deltaTime * CrouchCameraSpeed);
-
-            GetComponent<CapsuleCollider>().height = BodyHeight;
-            GetComponent<CapsuleCollider>().center = new Vector3(0.0f, BodyHeight / 2.0f, 0.0f);
-            GetComponent<SphereCollider>().center = new Vector3(0.0f, HeadYPosition, 0.0f);
         }
-
-        #region Weapon Switching
 
         //switch weapon forward
         if (Input.GetKeyDown(KeyCode.E))
@@ -421,8 +396,6 @@ public class PlayerController : Unit
             }
         }
 
-        #endregion
-
         //reload weapon
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -435,27 +408,19 @@ public class PlayerController : Unit
         //fire weapon
         if (Input.GetMouseButton(0) && EquipedWeapon.IsAutomatic)
         {
-            EquipedWeapon.Fire(this, _powerUnlimitedAmmoTimer > 0.0f);
+            EquipedWeapon.Fire(this);
 
             UIManager.Instance.UpdateGun();
         }
         else if (Input.GetMouseButtonDown(0))
         {
-            EquipedWeapon.Fire(this, _powerUnlimitedAmmoTimer > 0.0f);
+            EquipedWeapon.Fire(this);
 
             UIManager.Instance.UpdateGun();
         }
 
         //get movement input
-        Vector3 movementInput;
-        if (_powerSpeedTimer > 0.0f)
-        {
-            movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * _currentSpeed * PowerSpeedMultiplier;
-        }
-        else
-        {
-            movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * _currentSpeed;
-        }
+        Vector3 movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * _currentSpeed;
 
         //get jump input
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
@@ -498,7 +463,7 @@ public class PlayerController : Unit
             sound.transform.position = transform.position;
 
             //////open menu, show score, restart or quit
-
+            UIManager.Instance.ShowEndGameMenu();
             //player is now dead
         }
     }
@@ -535,12 +500,8 @@ public class PlayerController : Unit
 
     internal override void Damage(int damageAmount, Faction damagingFaction)
     {
-        if (_powerInvincibilityTimer <= 0.0f)
-        {
-            base.Damage(damageAmount, damagingFaction);
-            UIManager.Instance.UpdateHealth();
-        }
-        //else invincible
+        base.Damage(damageAmount, damagingFaction);
+        UIManager.Instance.UpdateHealth();
     }
 
     internal override void RestoreHealth()
@@ -583,70 +544,6 @@ public class PlayerController : Unit
     {
         base.RevertPermMaxHealth();
         UIManager.Instance.UpdateHealth();
-    }
-
-    #endregion
-
-    internal override void FireLaser(int damage, float lazerInaccuracy, Color laserColor)
-    {
-        if (_powerDamageTimer >= 0.0f)
-        {
-            base.FireLaser((int)(damage * PowerDamageMultiplier), lazerInaccuracy, laserColor);
-        }
-        else
-        {
-            base.FireLaser(damage, lazerInaccuracy, laserColor);
-        }
-    }
-
-    #region Powerup Methods
-
-    internal void PowerupSpeed(float time)
-    {
-        if (_powerSpeedTimer < 0.0f)
-        {
-            _powerSpeedTimer = time;
-        }
-        else
-        {
-            _powerSpeedTimer += time;
-        }
-    }
-
-    internal void PowerupDamage(float time)
-    {
-        if (_powerDamageTimer < 0.0f)
-        {
-            _powerDamageTimer = time;
-        }
-        else
-        {
-            _powerDamageTimer += time;
-        }
-    }
-
-    internal void PowerupInvincibility(float time)
-    {
-        if (_powerInvincibilityTimer < 0.0f)
-        {
-            _powerInvincibilityTimer = time;
-        }
-        else
-        {
-            _powerInvincibilityTimer += time;
-        }
-    }
-
-    internal void PowerupUnlimitedAmmo(float time)
-    {
-        if (_powerUnlimitedAmmoTimer < 0.0f)
-        {
-            _powerUnlimitedAmmoTimer = time;
-        }
-        else
-        {
-            _powerUnlimitedAmmoTimer += time;
-        }
     }
 
     #endregion

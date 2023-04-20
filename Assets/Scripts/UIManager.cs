@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     private static UIManager _instance;
+    public bool IsPlayGame = false;
 
     internal static UIManager Instance
     {
@@ -25,6 +28,50 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI GunField;
     public TextMeshProUGUI AmmoField;
     public RectTransform AmmoBar;
+    public GameObject PauseMenu=null;
+    public GameObject EndGameMenu = null;
+    public GameObject FirstMenu = null;
+    private void Start()
+    {
+        ShowFirstMenu();
+    }
+    public void ShowFirstMenu()
+    {
+        PauseMenu.SetActive(false);
+        FirstMenu.SetActive(true);
+        EndGameMenu.SetActive(false);
+        Time.timeScale = 0;
+    }
+    public void ShowEndGameMenu()
+    {
+        PauseMenu.SetActive(false);
+        FirstMenu.SetActive(false);
+        EndGameMenu.SetActive(true); 
+    }
+    public void Pause()
+    {
+        PauseMenu.SetActive(true);
+        FirstMenu.SetActive(false);
+        EndGameMenu.SetActive(false);
+        Time.timeScale = 0;
+    }
+    public void OnclickResume()
+    {
+        PauseMenu.SetActive(false);
+        FirstMenu.SetActive(false);
+        EndGameMenu.SetActive(false);
+        Time.timeScale = 1;
+        IsPlayGame = true;
+    }
+    public void OnclickRestart()
+    {
+
+        SceneManager.LoadScene("MainScene");
+    }
+    public void OnclickQuit()
+    {
+        EditorApplication.ExitPlaymode();
+    }
 
     internal void UpdateUI()
     {

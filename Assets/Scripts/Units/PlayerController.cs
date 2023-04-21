@@ -11,6 +11,8 @@ public class PlayerController : Unit
     [SerializeField] public float MouseSensitivityX = 1.0f;
     [SerializeField] public float MouseSensitivityY = 1.0f;
 
+    internal bool IsPaused;
+
     [SerializeField] public float CrouchCameraSpeed = 5.0f;
 
     [SerializeField] public Audio WeaponChangeAudioPrefab;
@@ -20,8 +22,6 @@ public class PlayerController : Unit
     protected bool _isSliding = false;
     protected bool _isSlideCooling = false;
     private bool _isJumping = false;
-
-    //private bool _cursorIsLocked=true;
 
     [SerializeField] public float BodyHeight = 1.75f;
 
@@ -35,6 +35,8 @@ public class PlayerController : Unit
     protected override void Start()
     {
         base.Start();
+
+        IsPaused = true;
 
         //player is always of the faction "player"
         UnitFaction = Faction.player;
@@ -63,12 +65,9 @@ public class PlayerController : Unit
     }
 
     private void Update()
-    {
-       //////////lock mouse
-        //////////////InternalLockUpdate();
-        
+    {        
         //disallow player control if dead
-        if (!IsAlive)
+        if (!IsAlive || IsPaused)
         {
             return;
         }
@@ -491,28 +490,6 @@ public class PlayerController : Unit
             //player is now dead
         }
     }
-    /*private void InternalLockUpdate()
-    {
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            _cursorIsLocked = false;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            _cursorIsLocked = true;
-        }
-
-        if (_cursorIsLocked)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        else if (!_cursorIsLocked)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-    }*/
 
     #region Health System
 

@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 626b3434c7887074a9e5807e77c5bdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseMaxHealth: 50
+  BaseMaxHealth: 60
   UnitFaction: 1
   Eye: {fileID: 650002746272904378}
   Weapons:

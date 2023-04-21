@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI AmmoField;
     [SerializeField] public RectTransform AmmoBar;
     [SerializeField] public TextMeshProUGUI ScoreField;
+    [SerializeField] public TextMeshProUGUI FinalScoreField;
 
     [SerializeField] public GameObject PauseMenu = null;
     [SerializeField] public GameObject EndGameMenu = null;
@@ -40,18 +41,14 @@ public class UIManager : MonoBehaviour
     {
         ShowFirstMenu();
     }
-
-    private void LateUpdate()
-    {
-        GameManager.Instance.Nothing();
-    }
-
     public void ShowFirstMenu()
     {
         PauseMenu.SetActive(false);
         FirstMenu.SetActive(true);
         EndGameMenu.SetActive(false);
+        //pause game
         Time.timeScale = 0;
+        GameManager.Instance.PausePlayer();
         //show cursor
         Cursor.lockState = CursorLockMode.None;
     }
@@ -60,7 +57,9 @@ public class UIManager : MonoBehaviour
         PauseMenu.SetActive(false);
         FirstMenu.SetActive(false);
         EndGameMenu.SetActive(true);
+        //pause game
         Time.timeScale = 0;
+        GameManager.Instance.PausePlayer();
         //show cursor
         Cursor.lockState = CursorLockMode.None;
     }
@@ -69,7 +68,9 @@ public class UIManager : MonoBehaviour
         PauseMenu.SetActive(true);
         FirstMenu.SetActive(false);
         EndGameMenu.SetActive(false);
+        //pause game
         Time.timeScale = 0;
+        GameManager.Instance.PausePlayer();
         //show cursor
         Cursor.lockState = CursorLockMode.None;
     }
@@ -78,10 +79,14 @@ public class UIManager : MonoBehaviour
         PauseMenu.SetActive(false);
         FirstMenu.SetActive(false);
         EndGameMenu.SetActive(false);
+        //unpause game
         Time.timeScale = 1;
+        GameManager.Instance.UnpausePlayer();
         IsPlayGame = true;
         //lock cursor
         Cursor.lockState = CursorLockMode.Locked;
+        //refresh HUD
+        UpdateUI();
     }
     public void OnclickRestart()
     {
@@ -98,6 +103,8 @@ public class UIManager : MonoBehaviour
         UpdateHealth();
         UpdateGun();
         UpdateAmmo();
+        UpdateScore();
+        UpdateTime();
     }
 
     internal void UpdateHealth()
@@ -122,6 +129,7 @@ public class UIManager : MonoBehaviour
     internal void UpdateScore()
     {
         ScoreField.text = ScoreManager.Instance.Score.ToString();
+        ScoreField.text = "Score: " + ScoreManager.Instance.Score.ToString();
     }
 
     internal void UpdateTime()

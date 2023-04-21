@@ -64,8 +64,13 @@ public class GameManager : MonoBehaviour
         GameTime = 0.0f;
     }
 
-    internal void Nothing()
+    internal void PausePlayer()
     {
-        //used to create an instance without doing anything else
+        Player.IsPaused = true;
+    }
+
+    internal void UnpausePlayer()
+    {
+        Player.IsPaused = false;
     }
 }

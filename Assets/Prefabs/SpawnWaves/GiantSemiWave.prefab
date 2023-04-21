@@ -57,5 +57,5 @@ MonoBehaviour:
   - {fileID: 4016845021970788735, guid: 73108fe83dfccbf41b81f3ab8dd2ed95, type: 3}
   - {fileID: 4016845021970788735, guid: 73108fe83dfccbf41b81f3ab8dd2ed95, type: 3}
   - {fileID: 4016845021970788735, guid: 73108fe83dfccbf41b81f3ab8dd2ed95, type: 3}
-  HalfDelayFromLastSpawn: 36
-  HalfDelayToNextSpawn: 36
+  HalfDelayFromLastSpawn: 30
+  HalfDelayToNextSpawn: 30

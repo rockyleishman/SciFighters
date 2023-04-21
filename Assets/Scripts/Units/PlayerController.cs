@@ -167,6 +167,8 @@ public class PlayerController : Unit
             _cameraPivot.localPosition = Vector3.MoveTowards(_cameraPivot.localPosition, _cameraPivotStandingPosition, Time.deltaTime * CrouchCameraSpeed);
         }
 
+        #region Weapon Switching
+
         //switch weapon forward
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -411,6 +413,8 @@ public class PlayerController : Unit
             }
         }
 
+        #endregion
+
         //reload weapon
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -423,19 +427,27 @@ public class PlayerController : Unit
         //fire weapon
         if (Input.GetMouseButton(0) && EquipedWeapon.IsAutomatic)
         {
-            EquipedWeapon.Fire(this, false);
+            EquipedWeapon.Fire(this, _powerUnlimitedAmmoTimer > 0.0f);
 
             UIManager.Instance.UpdateGun();
         }
         else if (Input.GetMouseButtonDown(0))
         {
-            EquipedWeapon.Fire(this, false);
+            EquipedWeapon.Fire(this, _powerUnlimitedAmmoTimer > 0.0f);
 
             UIManager.Instance.UpdateGun();
         }
 
         //get movement input
-        Vector3 movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * _currentSpeed;
+        Vector3 movementInput;
+        if (_powerSpeedTimer > 0.0f)
+        {
+            movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * _currentSpeed * PowerSpeedMultiplier;
+        }
+        else
+        {
+            movementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized * _currentSpeed;
+        }
 
         //get jump input
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
@@ -516,8 +528,12 @@ public class PlayerController : Unit
 
     internal override void Damage(int damageAmount, Faction damagingFaction)
     {
-        base.Damage(damageAmount, damagingFaction);
-        UIManager.Instance.UpdateHealth();
+        if (_powerInvincibilityTimer <= 0.0f)
+        {
+            base.Damage(damageAmount, damagingFaction);
+            UIManager.Instance.UpdateHealth();
+        }
+        //else is invinicible
     }
 
     internal override void RestoreHealth()
@@ -615,4 +631,16 @@ public class PlayerController : Unit
     }
 
     #endregion
+
+    internal override void FireLaser(int damage, float lazerInaccuracy, Color laserColor)
+    {
+        if (_powerDamageTimer > 0.0f)
+        {
+            base.FireLaser((int)(damage * PowerDamageMultiplier), lazerInaccuracy, laserColor);
+        }
+        else
+        {
+            base.FireLaser(damage, lazerInaccuracy, laserColor);
+        }
+    }
 }

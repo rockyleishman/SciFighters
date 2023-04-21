@@ -39,6 +39,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        PlayTime *= 60;
         ShowFirstMenu();
     }
     private void Update()

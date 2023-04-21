@@ -22,6 +22,15 @@ public class PlayerController : Unit
     private bool _isJumping = false;
     private bool _cursorIsLocked=true;
 
+    [SerializeField] public float BodyHeight = 1.75f;
+
+    [SerializeField] public float PowerDamageMultiplier = 2.0f;
+    [SerializeField] public float PowerSpeedMultiplier = 1.5f;
+    private float _powerDamageTimer;
+    private float _powerSpeedTimer;
+    private float _powerInvincibilityTimer;
+    private float _powerUnlimitedAmmoTimer;
+
     protected override void Start()
     {
         base.Start();
@@ -54,6 +63,12 @@ public class PlayerController : Unit
 
     private void Update()
     {
+        //Update powerup timers
+        _powerDamageTimer -= Time.deltaTime;
+        _powerSpeedTimer -= Time.deltaTime;
+        _powerInvincibilityTimer -= Time.deltaTime;
+        _powerUnlimitedAmmoTimer -= Time.deltaTime;
+
         //rotate camera
         _cameraPivot.Rotate(-Input.GetAxis("Mouse Y") * MouseSensitivityY, 0, 0);
        //lock mouse
@@ -408,13 +423,13 @@ public class PlayerController : Unit
         //fire weapon
         if (Input.GetMouseButton(0) && EquipedWeapon.IsAutomatic)
         {
-            EquipedWeapon.Fire(this);
+            EquipedWeapon.Fire(this, false);
 
             UIManager.Instance.UpdateGun();
         }
         else if (Input.GetMouseButtonDown(0))
         {
-            EquipedWeapon.Fire(this);
+            EquipedWeapon.Fire(this, false);
 
             UIManager.Instance.UpdateGun();
         }
@@ -462,8 +477,9 @@ public class PlayerController : Unit
             Audio sound = Instantiate(DeathAudioPrefab);
             sound.transform.position = transform.position;
 
-            //////open menu, show score, restart or quit
+            //open menu, show score, restart or quit
             UIManager.Instance.ShowEndGameMenu();
+
             //player is now dead
         }
     }
@@ -544,6 +560,58 @@ public class PlayerController : Unit
     {
         base.RevertPermMaxHealth();
         UIManager.Instance.UpdateHealth();
+    }
+
+    #endregion
+
+    #region Powerup Methods
+
+    internal void PowerupDamage(float time)
+    {
+        if (_powerDamageTimer <= 0.0f)
+        {
+            _powerDamageTimer = time;
+        }
+        else
+        {
+            _powerDamageTimer += time;
+        }
+    }
+
+    internal void PowerupSpeed(float time)
+    {
+        if (_powerSpeedTimer <= 0.0f)
+        {
+            _powerSpeedTimer = time;
+        }
+        else
+        {
+            _powerSpeedTimer += time;
+        }
+    }
+
+    internal void PowerupInvincibility(float time)
+    {
+        if (_powerInvincibilityTimer <= 0.0f)
+        {
+            _powerInvincibilityTimer = time;
+        }
+        else
+        {
+            _powerInvincibilityTimer += time;
+        }
+    }
+
+    internal void PowerupUnlimitedAmmo(float time)
+    {
+        if (_powerUnlimitedAmmoTimer <= 0.0f)
+        {
+            _powerUnlimitedAmmoTimer = time;
+        }
+        else
+        {
+            _powerUnlimitedAmmoTimer += time;
+        }
     }
 
     #endregion

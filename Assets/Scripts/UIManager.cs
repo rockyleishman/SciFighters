@@ -31,9 +31,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI GunField;
     public TextMeshProUGUI AmmoField;
     public RectTransform AmmoBar;
-    public GameObject PauseMenu=null;
+    public TextMeshProUGUI ScoreField;
+
+    public GameObject PauseMenu = null;
     public GameObject EndGameMenu = null;
     public GameObject FirstMenu = null;
+
     private void Start()
     {
         ShowFirstMenu();
@@ -60,7 +63,8 @@ public class UIManager : MonoBehaviour
     {
         PauseMenu.SetActive(false);
         FirstMenu.SetActive(false);
-        EndGameMenu.SetActive(true); 
+        EndGameMenu.SetActive(true);
+        Time.timeScale = 0;
     }
     public void Pause()
     {
@@ -111,5 +115,10 @@ public class UIManager : MonoBehaviour
     internal void UpdateAmmo()
     {
         AmmoField.text = GameManager.Instance.Player.UnloadedAmmo.ToString();
+    }
+
+    internal void UpdateScore()
+    {
+        ScoreField.text = ScoreManager.Instance.Score.ToString();
     }
 }

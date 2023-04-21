@@ -94,7 +94,7 @@ MonoBehaviour:
   MagneticAcceleration: 10
   RotationSpeed: 0.25
   RotationAxisY: 0
-  MinHealAmount: 50
+  MinHealAmount: 25
   MaxHealAmount: 50
 --- !u!1 &5859948705179146874
 GameObject:

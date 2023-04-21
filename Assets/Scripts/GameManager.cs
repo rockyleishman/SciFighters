@@ -20,11 +20,17 @@ public class GameManager : MonoBehaviour
 
     internal PatrolPoint[] LevelPatrolPoints { get; private set; }
 
+    [SerializeField] public float LevelTimeLimitInMinutes = 20;
     internal float GameTime { get; private set; }
 
     [SerializeField] public PlayerController Player;
 
     private void OnCreateInstance()
+    {
+        
+    }
+
+    private void Start()
     {
         //get array of patrol points for AI navigation
         LevelPatrolPoints = GetComponentsInChildren<PatrolPoint>();
@@ -38,7 +44,21 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        //update time
         GameTime += Time.deltaTime;
+        UIManager.Instance.UpdateTime();
+
+        //check for time up
+        if (GameTime >= LevelTimeLimitInMinutes * 60.0f)
+        {
+            GameOver();
+        }
+    }
+
+    internal void GameOver()
+    {
+        //game over
+        UIManager.Instance.ShowEndGameMenu();
     }
 
     internal void ResetGameTime()

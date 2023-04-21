@@ -4906,7 +4906,7 @@ MonoBehaviour:
   MagneticAcceleration: 10
   RotationSpeed: 0.25
   RotationAxisY: 0
-  MinAmmoAmount: 50
+  MinAmmoAmount: 25
   MaxAmmoAmount: 50
 --- !u!1001 &6286136709528792984
 PrefabInstance:

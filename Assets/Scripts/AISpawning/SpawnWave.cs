@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnWave : MonoBehaviour
 {
-    [SerializeField] public int[] AIIndicesToSpawn;
-    [SerializeField] public float DelayFromLastSpawn;
-    internal bool isSpawned = false;
+    [SerializeField] public AIController[] EnemiesToSpawn;
+    [SerializeField] public float HalfDelayFromLastSpawn;
+    [SerializeField] public float HalfDelayToNextSpawn;
 }

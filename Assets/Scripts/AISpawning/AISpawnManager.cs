@@ -21,8 +21,6 @@ public class AISpawnManager : MonoBehaviour
 
     [SerializeField] public float MinimumSpawnDistance = 40.0f; //if this is too high for the level size the game will crash
 
-    [SerializeField] public AIController[] AIPrefabs;
-
     internal SpawnPoint[] SpawnPoints { get; private set; }
 
     [SerializeField] public List<SpawnWave> SpawnWaves;
@@ -34,7 +32,7 @@ public class AISpawnManager : MonoBehaviour
     {
         SpawnPoints = GetComponentsInChildren<SpawnPoint>();
 
-        SpawnTimer = SpawnWaves.DefaultIfEmpty(DefaultSpawnWave).First().DelayFromLastSpawn;
+        SpawnTimer = SpawnWaves.DefaultIfEmpty(DefaultSpawnWave).First().HalfDelayFromLastSpawn;
     }
 
     private void Update()
@@ -43,9 +41,6 @@ public class AISpawnManager : MonoBehaviour
 
         if (SpawnTimer <= 0.0f)
         {
-            //////
-            Debug.Log("spawning spawnwave " + SpawnWaves.DefaultIfEmpty(DefaultSpawnWave).First().name);
-            //////
             Transform spawnTransform = GameManager.Instance.Player.transform;
 
             while (Vector3.Distance(spawnTransform.position, GameManager.Instance.Player.transform.position) < MinimumSpawnDistance)
@@ -55,50 +50,31 @@ public class AISpawnManager : MonoBehaviour
 
             SpawnSpawnWave(SpawnWaves.DefaultIfEmpty(DefaultSpawnWave).First(), spawnTransform);
         }
-
-        /*foreach (SpawnWave wave in SpawnWaves)
-        {
-            if (GameManager.Instance.GameTime >= wave.SpawnTime)
-            {
-                Transform spawnTransform = GameManager.Instance.Player.transform;
-
-                while (Vector3.Distance(spawnTransform.position, GameManager.Instance.Player.transform.position) < MinimumSpawnDistance)
-                {
-                    spawnTransform = SpawnPoints[Random.Range(0, SpawnPoints.Length)].transform;
-                }
-                
-                SpawnSpawnWave(wave, spawnTransform);
-            }
-        }
-
-        foreach (SpawnWave wave in SpawnWaves.Reverse<SpawnWave>())
-        {
-            if (wave.isSpawned)
-            {
-                SpawnWaves.Remove(wave);
-            }
-        }*/
     }
 
     private void SpawnSpawnWave(SpawnWave wave, Transform spawnTransform)
     {
-        foreach (int i in wave.AIIndicesToSpawn)
+        //add spawn delay from this wave for next spawn
+        SpawnTimer = wave.HalfDelayToNextSpawn;
+
+        //spawn enemies
+        foreach (AIController enemy in wave.EnemiesToSpawn)
         {
-            SpawnAI(AIPrefabs[i], spawnTransform);
+            SpawnAI(enemy, spawnTransform);
         }
 
-        //wave.isSpawned = true;
+        //delete unique spawned waves
         try
         {
             SpawnWaves.RemoveAt(0);
         }
         catch
         {
-            //no unique SpawnWaves left
+            //no unique waves left
         }
 
-        //reset spawn timer for next wave
-        SpawnTimer = SpawnWaves.DefaultIfEmpty(DefaultSpawnWave).First().DelayFromLastSpawn;
+        //add spawn delay from next wave for next spawn
+        SpawnTimer += SpawnWaves.DefaultIfEmpty(DefaultSpawnWave).First().HalfDelayFromLastSpawn;
     }
 
     private void SpawnAI(AIController aIPrefab, Transform spawnTransform)

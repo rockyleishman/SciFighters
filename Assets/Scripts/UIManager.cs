@@ -52,6 +52,8 @@ public class UIManager : MonoBehaviour
         FirstMenu.SetActive(true);
         EndGameMenu.SetActive(false);
         Time.timeScale = 0;
+        //show cursor
+        Cursor.lockState = CursorLockMode.None;
     }
     public void ShowEndGameMenu()
     {
@@ -59,6 +61,8 @@ public class UIManager : MonoBehaviour
         FirstMenu.SetActive(false);
         EndGameMenu.SetActive(true);
         Time.timeScale = 0;
+        //show cursor
+        Cursor.lockState = CursorLockMode.None;
     }
     public void Pause()
     {
@@ -66,6 +70,8 @@ public class UIManager : MonoBehaviour
         FirstMenu.SetActive(false);
         EndGameMenu.SetActive(false);
         Time.timeScale = 0;
+        //show cursor
+        Cursor.lockState = CursorLockMode.None;
     }
     public void OnclickResume()
     {
@@ -74,6 +80,8 @@ public class UIManager : MonoBehaviour
         EndGameMenu.SetActive(false);
         Time.timeScale = 1;
         IsPlayGame = true;
+        //lock cursor
+        Cursor.lockState = CursorLockMode.Locked;
     }
     public void OnclickRestart()
     {

@@ -20,7 +20,8 @@ public class PlayerController : Unit
     protected bool _isSliding = false;
     protected bool _isSlideCooling = false;
     private bool _isJumping = false;
-    private bool _cursorIsLocked=true;
+
+    //private bool _cursorIsLocked=true;
 
     [SerializeField] public float BodyHeight = 1.75f;
 
@@ -63,6 +64,15 @@ public class PlayerController : Unit
 
     private void Update()
     {
+       //////////lock mouse
+        //////////////InternalLockUpdate();
+        
+        //disallow player control if dead
+        if (!IsAlive)
+        {
+            return;
+        }
+
         //Update powerup timers
         _powerDamageTimer -= Time.deltaTime;
         _powerSpeedTimer -= Time.deltaTime;
@@ -71,13 +81,6 @@ public class PlayerController : Unit
 
         //rotate camera
         _cameraPivot.Rotate(-Input.GetAxis("Mouse Y") * MouseSensitivityY, 0, 0);
-       //lock mouse
-        InternalLockUpdate();
-        //disallow other movement if dead
-        if (!IsAlive)
-        {
-            return;
-        }
 
         //update isJumping
         if (IsGrounded())
@@ -458,11 +461,6 @@ public class PlayerController : Unit
             //legs must extend to jump
             _isCrouching = false;
             _isSliding = false;
-
-            ////////TEMP FIX UNTIL UI BUILT, REMOVE LATER
-            //remove cursor
-            Cursor.lockState = CursorLockMode.Locked;
-            ////
         }
         else
         {
@@ -476,9 +474,7 @@ public class PlayerController : Unit
         transform.Rotate(0, Input.GetAxis("Mouse X") * MouseSensitivityX, 0);
 
     }
-/// <summary>
-/// lock mouse
-/// </summary>
+
     protected override void Die()
     {
         //do once
@@ -495,7 +491,7 @@ public class PlayerController : Unit
             //player is now dead
         }
     }
-    private void InternalLockUpdate()
+    /*private void InternalLockUpdate()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
@@ -516,7 +512,7 @@ public class PlayerController : Unit
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-    }
+    }*/
 
     #region Health System
 
@@ -535,6 +531,7 @@ public class PlayerController : Unit
 
             //decrease score
             ScoreManager.Instance.SubtractScore(damageAmount);
+            UIManager.Instance.UpdateScore();
         }
         //else is invinicible
     }

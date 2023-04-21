@@ -462,8 +462,9 @@ public class PlayerController : Unit
             Audio sound = Instantiate(DeathAudioPrefab);
             sound.transform.position = transform.position;
 
-            //////open menu, show score, restart or quit
+            //open menu, show score, restart or quit
             UIManager.Instance.ShowEndGameMenu();
+
             //player is now dead
         }
     }

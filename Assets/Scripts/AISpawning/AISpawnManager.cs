@@ -63,10 +63,6 @@ public class AISpawnManager : MonoBehaviour
         }
 
         wave.isSpawned = true;
-
-        ////////
-        Debug.Log("Wave Spawned");
-        ////
     }
 
     private void SpawnAI(AIController aIPrefab, Transform spawnTransform)

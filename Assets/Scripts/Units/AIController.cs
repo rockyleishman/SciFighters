@@ -273,6 +273,10 @@ public class AIController : Unit
             //drop pickup
             DropPickup();
 
+            //Increase Score
+            ScoreManager.Instance.AddScore(ScoreValue);
+            UIManager.Instance.UpdateScore();
+
             //set dying state
             SetState(AIState.Dying);
 

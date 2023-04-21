@@ -27,6 +27,8 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] public Pickup[] DroppedPickups;
     [SerializeField] [Range(0.0f, 1.0f)] public float PickupDropChance = 0.0f;
 
+    [SerializeField] public int ScoreValue = 100;
+
     private const float GroundRayLength = 0.1f;
 
     internal bool IsAlive { get; private protected set; }

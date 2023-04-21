@@ -532,6 +532,9 @@ public class PlayerController : Unit
         {
             base.Damage(damageAmount, damagingFaction);
             UIManager.Instance.UpdateHealth();
+
+            //decrease score
+            ScoreManager.Instance.SubtractScore(damageAmount);
         }
         //else is invinicible
     }

@@ -156,6 +156,8 @@ MonoBehaviour:
   DroppedPickups:
   - {fileID: 6286136709475572214, guid: ec5c27220d2c5ba469f44ba22ed0daf1, type: 3}
   - {fileID: 6286136709475572214, guid: ec5c27220d2c5ba469f44ba22ed0daf1, type: 3}
+  - {fileID: 6286136709475572214, guid: ec5c27220d2c5ba469f44ba22ed0daf1, type: 3}
+  - {fileID: 5859948704106123674, guid: 3f29f94750972e544a7c69a869991a15, type: 3}
   - {fileID: 5859948704106123674, guid: 3f29f94750972e544a7c69a869991a15, type: 3}
   EachPickupDropChance: 0.1
   PickupDropRadius: 0.5
@@ -165,6 +167,7 @@ MonoBehaviour:
   - {fileID: 4979466516497188798, guid: 999af0393c2ddaf42b3153c7cad49e23, type: 3}
   - {fileID: 5125975156352580076, guid: becc33a74f260b141b75d9a5d124343c, type: 3}
   SinglePowerupDropChance: 0.05
+  ScoreValue: 100
   TriggerDelay: 0.75
   MaxInaccuracyDegrees: 5
   Hurt1AudioPrefab: {fileID: 8953094202857078631, guid: e6ededa9a5e3e6749b4b07690b5377ba, type: 3}
@@ -263,6 +266,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1896386214811197048, guid: 91797e8090f648c40a23bd8fdfd2e27a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 42b0880ee8c08a348996f79907de3728, type: 2}
     - target: {fileID: 2041941766323008895, guid: 91797e8090f648c40a23bd8fdfd2e27a, type: 3}
       propertyPath: m_Layer
       value: 10

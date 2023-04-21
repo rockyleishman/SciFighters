@@ -27,7 +27,8 @@ public class GameManager : MonoBehaviour
 
     private void OnCreateInstance()
     {
-        
+        //init UI
+        UIManager.Instance.UpdateUI();
     }
 
     private void Start()
@@ -37,9 +38,6 @@ public class GameManager : MonoBehaviour
 
         //init game time
         GameTime = 0.0f;
-
-        //init UI
-        UIManager.Instance.UpdateUI();
     }
 
     private void Update()
@@ -64,5 +62,10 @@ public class GameManager : MonoBehaviour
     internal void ResetGameTime()
     {
         GameTime = 0.0f;
+    }
+
+    internal void Nothing()
+    {
+        //used to create an instance without doing anything else
     }
 }

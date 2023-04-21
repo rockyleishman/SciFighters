@@ -40,10 +40,12 @@ public class UIManager : MonoBehaviour
     {
         ShowFirstMenu();
     }
-    private void Update()
-    {
 
+    private void LateUpdate()
+    {
+        GameManager.Instance.Nothing();
     }
+
     public void ShowFirstMenu()
     {
         PauseMenu.SetActive(false);

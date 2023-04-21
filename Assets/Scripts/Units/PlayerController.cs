@@ -564,23 +564,55 @@ public class PlayerController : Unit
 
     #endregion
 
+    #region Powerup Methods
+
     internal void PowerupDamage(float time)
     {
-        
+        if (_powerDamageTimer <= 0.0f)
+        {
+            _powerDamageTimer = time;
+        }
+        else
+        {
+            _powerDamageTimer += time;
+        }
     }
 
     internal void PowerupSpeed(float time)
     {
-        
+        if (_powerSpeedTimer <= 0.0f)
+        {
+            _powerSpeedTimer = time;
+        }
+        else
+        {
+            _powerSpeedTimer += time;
+        }
     }
 
     internal void PowerupInvincibility(float time)
-    { 
-        
+    {
+        if (_powerInvincibilityTimer <= 0.0f)
+        {
+            _powerInvincibilityTimer = time;
+        }
+        else
+        {
+            _powerInvincibilityTimer += time;
+        }
     }
 
     internal void PowerupUnlimitedAmmo(float time)
     {
-        
+        if (_powerUnlimitedAmmoTimer <= 0.0f)
+        {
+            _powerUnlimitedAmmoTimer = time;
+        }
+        else
+        {
+            _powerUnlimitedAmmoTimer += time;
+        }
     }
+
+    #endregion
 }

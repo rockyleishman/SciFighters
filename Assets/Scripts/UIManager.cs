@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
 {
     private static UIManager _instance;
     public bool IsPlayGame = false;
+    public float PlayTime = 1f;
+    private float CurentTime = 0;
 
     internal static UIManager Instance
     {
@@ -22,7 +24,8 @@ public class UIManager : MonoBehaviour
             return _instance;
         }
     }
-
+    
+    public TextMeshProUGUI TimeCount;
     public TextMeshProUGUI HealthField;
     public RectTransform HealthBar;
     public TextMeshProUGUI GunField;
@@ -34,6 +37,17 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         ShowFirstMenu();
+    }
+    private void Update()
+    {
+        CurentTime += Time.deltaTime;
+        if (PlayTime - CurentTime > 0)
+        {
+            TimeCount.text = "Time Remaining : " + Mathf.Floor((PlayTime - CurentTime) / 60) + "m " + Mathf.Floor((PlayTime - CurentTime) % 60) + "s";
+        }
+        else
+            ShowEndGameMenu();
+
     }
     public void ShowFirstMenu()
     {

@@ -7,7 +7,7 @@ public class BackgroundMusic : MonoBehaviour
     //public AudioMixer audioMixer;
     public AudioClip music1;
     public AudioClip music2;
-    private AudioSource _audioSource;
+    public AudioSource _audioSource;
     private bool _isPlayingMusic1 = true;
     private float _elapsedTime = 0.1f;
     private const float MusicDuration1 = 300.0f;  // 背景音乐1的时长为5分钟（300秒）

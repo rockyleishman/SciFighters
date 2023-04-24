@@ -111,14 +111,28 @@ public class UIManager : MonoBehaviour
     {
         HealthField.text = "HP: " + GameManager.Instance.Player.Health.ToString() + " / " + GameManager.Instance.Player.MaxHealth.ToString();
         float healthAlpha = (float)GameManager.Instance.Player.Health / (float)GameManager.Instance.Player.MaxHealth;
-        HealthBar.localScale = new Vector3(healthAlpha, 1.0f, 1.0f);
-        HealthBar.GetComponent<RawImage>().color = Color.Lerp(Color.red, Color.green, healthAlpha);
+        if (healthAlpha >= 0.0f && healthAlpha <= 1.0f)
+        {
+            HealthBar.localScale = new Vector3(healthAlpha, 1.0f, 1.0f);
+            HealthBar.GetComponent<RawImage>().color = Color.Lerp(Color.red, Color.green, healthAlpha);
+        }
+        else
+        {
+            healthAlpha = 0.0f;
+        }
     }
 
     internal void UpdateGun()
     {
-        GunField.text = GameManager.Instance.Player.EquipedWeapon.name + ": " + GameManager.Instance.Player.EquipedWeapon.Ammo.ToString() + " / " + GameManager.Instance.Player.EquipedWeapon.MagazineSize.ToString();
-        AmmoBar.localScale = new Vector3((float)GameManager.Instance.Player.EquipedWeapon.Ammo / (float)GameManager.Instance.Player.EquipedWeapon.MagazineSize, 1.0f, 1.0f);
+        try
+        {
+            GunField.text = GameManager.Instance.Player.EquipedWeapon.name + ": " + GameManager.Instance.Player.EquipedWeapon.Ammo.ToString() + " / " + GameManager.Instance.Player.EquipedWeapon.MagazineSize.ToString();
+            AmmoBar.localScale = new Vector3((float)GameManager.Instance.Player.EquipedWeapon.Ammo / (float)GameManager.Instance.Player.EquipedWeapon.MagazineSize, 1.0f, 1.0f);
+        }
+        catch
+        {
+            //wait for next update
+        }
     }
 
     internal void UpdateAmmo()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,16 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private Slider volumeSlider = null;
+    //[SerializeField] private TextMeshProUGUI volumeTextUI = null;
+    [SerializeField] private GameObject _gameObject;
+    private AudioSource AS;
+
+    public void ChangeVolume()
+    {
+        AS.volume = volumeSlider.value;
+    }
+
     private static UIManager _instance;
 
     internal static UIManager Instance
@@ -18,6 +29,7 @@ public class UIManager : MonoBehaviour
             {
                 _instance = GameObject.FindObjectOfType<UIManager>();
             }
+
             return _instance;
         }
     }
@@ -40,7 +52,18 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         ShowFirstMenu();
+        AS = _gameObject.GetComponent<AudioSource>();
+        volumeSlider.value = 0.5f;
     }
+
+    private void Update()
+    {
+        if (PauseMenu.activeSelf==true)
+        {
+            ChangeVolume();
+        }
+    }
+
     public void ShowFirstMenu()
     {
         PauseMenu.SetActive(false);
@@ -52,6 +75,7 @@ public class UIManager : MonoBehaviour
         //show cursor
         Cursor.lockState = CursorLockMode.None;
     }
+
     public void ShowEndGameMenu()
     {
         PauseMenu.SetActive(false);
@@ -63,6 +87,7 @@ public class UIManager : MonoBehaviour
         //show cursor
         Cursor.lockState = CursorLockMode.None;
     }
+
     public void Pause()
     {
         PauseMenu.SetActive(true);
@@ -74,6 +99,7 @@ public class UIManager : MonoBehaviour
         //show cursor
         Cursor.lockState = CursorLockMode.None;
     }
+
     public void OnclickResume()
     {
         PauseMenu.SetActive(false);
@@ -88,11 +114,12 @@ public class UIManager : MonoBehaviour
         //refresh HUD
         UpdateUI();
     }
+
     public void OnclickRestart()
     {
-
         SceneManager.LoadScene("MainScene");
     }
+
     public void OnclickQuit()
     {
         EditorApplication.ExitPlaymode();
@@ -109,7 +136,8 @@ public class UIManager : MonoBehaviour
 
     internal void UpdateHealth()
     {
-        HealthField.text = "HP: " + GameManager.Instance.Player.Health.ToString() + " / " + GameManager.Instance.Player.MaxHealth.ToString();
+        HealthField.text = "HP: " + GameManager.Instance.Player.Health.ToString() + " / " +
+                           GameManager.Instance.Player.MaxHealth.ToString();
         float healthAlpha = (float)GameManager.Instance.Player.Health / (float)GameManager.Instance.Player.MaxHealth;
         if (healthAlpha >= 0.0f && healthAlpha <= 1.0f)
         {
@@ -126,8 +154,13 @@ public class UIManager : MonoBehaviour
     {
         try
         {
-            GunField.text = GameManager.Instance.Player.EquipedWeapon.name + ": " + GameManager.Instance.Player.EquipedWeapon.Ammo.ToString() + " / " + GameManager.Instance.Player.EquipedWeapon.MagazineSize.ToString();
-            AmmoBar.localScale = new Vector3((float)GameManager.Instance.Player.EquipedWeapon.Ammo / (float)GameManager.Instance.Player.EquipedWeapon.MagazineSize, 1.0f, 1.0f);
+            GunField.text = GameManager.Instance.Player.EquipedWeapon.name + ": " +
+                            GameManager.Instance.Player.EquipedWeapon.Ammo.ToString() + " / " +
+                            GameManager.Instance.Player.EquipedWeapon.MagazineSize.ToString();
+            AmmoBar.localScale =
+                new Vector3(
+                    (float)GameManager.Instance.Player.EquipedWeapon.Ammo /
+                    (float)GameManager.Instance.Player.EquipedWeapon.MagazineSize, 1.0f, 1.0f);
         }
         catch
         {
@@ -150,6 +183,7 @@ public class UIManager : MonoBehaviour
     {
         float timeRemaining = (GameManager.Instance.LevelTimeLimitInMinutes * 60.0f) - GameManager.Instance.GameTime;
 
-        TimeField.text = "Time Left: " + ((int)Mathf.Floor(timeRemaining / 60)).ToString("D2") + ":" + ((int)Mathf.Floor(timeRemaining % 60)).ToString("D2");
+        TimeField.text = "Time Left: " + ((int)Mathf.Floor(timeRemaining / 60)).ToString("D2") + ":" +
+                         ((int)Mathf.Floor(timeRemaining % 60)).ToString("D2");
     }
 }

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
+    
+
     private static ScoreManager _instance;
+
     internal static ScoreManager Instance
     {
         get
@@ -13,12 +16,13 @@ public class ScoreManager : MonoBehaviour
             {
                 _instance = GameObject.FindObjectOfType<ScoreManager>();
             }
+
             return _instance;
         }
     }
 
     internal int Score { get; private set; }
-
+    internal string playerName;
     private void Start()
     {
         Score = 0;
@@ -31,6 +35,15 @@ public class ScoreManager : MonoBehaviour
 
     internal void SubtractScore(int value)
     {
-        Score -= value;
+        if (Score > 0)
+        {
+            Score -= value;
+        }
+        else
+        {
+            Score = 0;
+        }
     }
+
+
 }

@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     }
 
     internal PatrolPoint[] LevelPatrolPoints { get; private set; }
-
-    [SerializeField] public float LevelTimeLimitInMinutes = 20;
+    public string currentPlayer;
+    [SerializeField] public float LevelTimeLimitInMinutes = 5;
     internal float GameTime { get; private set; }
 
     [SerializeField] public PlayerController Player;

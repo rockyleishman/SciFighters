@@ -44,7 +44,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] public RectTransform AmmoBar;
     [SerializeField] public TextMeshProUGUI ScoreField;
     [SerializeField] public TextMeshProUGUI FinalScoreField;
-
+    public Transform EndGameMenuScoreTF;
+     public TextMeshProUGUI  EndGameMenuScoreTMP;
     [SerializeField] public GameObject PauseMenu = null;
     [SerializeField] public GameObject EndGameMenu = null;
     [SerializeField] public GameObject FirstMenu = null;
@@ -53,6 +54,8 @@ public class UIManager : MonoBehaviour
     {
         ShowFirstMenu();
         AS = _gameObject.GetComponent<AudioSource>();
+        EndGameMenuScoreTF = EndGameMenu.transform.Find("txtScore");
+        EndGameMenuScoreTMP=EndGameMenuScoreTF.GetComponent<TextMeshProUGUI >();
         volumeSlider.value = 0.5f;
     }
 
@@ -81,9 +84,11 @@ public class UIManager : MonoBehaviour
         PauseMenu.SetActive(false);
         FirstMenu.SetActive(false);
         EndGameMenu.SetActive(true);
+        EndGameMenuScoreTMP.text="Score: " + ScoreManager.Instance.Score.ToString();
         //pause game
         Time.timeScale = 0;
         GameManager.Instance.PausePlayer();
+        PlayerPrefs.SetInt(GameManager.Instance.currentPlayer, ScoreManager.Instance.Score);
         //show cursor
         Cursor.lockState = CursorLockMode.None;
     }
@@ -175,7 +180,7 @@ public class UIManager : MonoBehaviour
 
     internal void UpdateScore()
     {
-        ScoreField.text = ScoreManager.Instance.Score.ToString();
+
         ScoreField.text = "Score: " + ScoreManager.Instance.Score.ToString();
     }
 

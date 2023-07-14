@@ -107,6 +107,7 @@ MonoBehaviour:
   PickupDropRadius: 0.5
   DroppedPowerups: []
   SinglePowerupDropChance: 0
+  ScoreValue: 100
   TriggerDelay: 0
   MaxInaccuracyDegrees: 0
   Hurt1AudioPrefab: {fileID: 8953094202857078631, guid: e6ededa9a5e3e6749b4b07690b5377ba, type: 3}
@@ -123,13 +124,11 @@ MonoBehaviour:
   JumpVelocity: 5
   MouseSensitivityX: 1
   MouseSensitivityY: 1
-  HeadYPosition: 1.675
-  BodyHeight: 1.75
-  CrouchBodyHeight: 1
   CrouchCameraSpeed: 5
   WeaponChangeAudioPrefab: {fileID: 8953094202857078631, guid: 240e1831a9dab414fa07a98d6eb0a0a7, type: 3}
-  PowerSpeedMultiplier: 1.5
+  BodyHeight: 1.75
   PowerDamageMultiplier: 2
+  PowerSpeedMultiplier: 1.5
 --- !u!1 &3511599999816499267
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +189,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3511600000227418453}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.2}
+  m_LocalPosition: {x: 0, y: 0.028, z: -0.134}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -220,7 +219,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.4
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 50
   orthographic: 0
@@ -228,7 +227,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2047
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -624,7 +623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 749748868587041438, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 762599561746121172, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_Layer
@@ -716,6 +715,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2924190702685279875, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3027279344248867439, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3116054920543571220, guid: e5891a12a06c3984cb3cefb6f9058bd7, type: 3}

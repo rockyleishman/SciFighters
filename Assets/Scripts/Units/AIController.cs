@@ -69,6 +69,8 @@ public class AIController : Unit
                 break;
             case AIState.Dying:
                 //no more coroutines when dying
+                
+                Die();
                 break;
             case AIState.Idle:
             default:
@@ -282,7 +284,8 @@ public class AIController : Unit
 
             //set death animation
             ani.SetTrigger(("DeadTrigger"));
-
+            Debug.Log("dying");
+            //ani.SetBool("DeadBool",true);
             //death sound
             Audio sound = Instantiate(DeathAudioPrefab);
             sound.transform.position = transform.position;

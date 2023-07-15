@@ -59,18 +59,28 @@ public class AIController : Unit
         switch (_currentState)
         {
             case AIState.Roam:
-                StartCoroutine(OnRoam());
+                if(IsAlive==true)
+                    StartCoroutine(OnRoam());
                 break;
             case AIState.Chase:
-                StartCoroutine(OnChase());
+                if(IsAlive==true)
+                    StartCoroutine(OnChase());
                 break;
             case AIState.Attack:
-                StartCoroutine(OnAttack());
+                if(IsAlive==true)
+                    StartCoroutine(OnAttack());
                 break;
             case AIState.Dying:
                 //no more coroutines when dying
-                
-                Die();
+                Debug.Log("dying");
+                //set death animation
+                if (IsAlive == false)
+                {
+                    ani.SetTrigger(("DeadTrigger"));
+            
+                    ani.SetBool("DeadBool",true);
+                }
+
                 break;
             case AIState.Idle:
             default:
@@ -282,10 +292,8 @@ public class AIController : Unit
             //set dying state
             SetState(AIState.Dying);
 
-            //set death animation
-            ani.SetTrigger(("DeadTrigger"));
-            Debug.Log("dying");
-            //ani.SetBool("DeadBool",true);
+ 
+        
             //death sound
             Audio sound = Instantiate(DeathAudioPrefab);
             sound.transform.position = transform.position;

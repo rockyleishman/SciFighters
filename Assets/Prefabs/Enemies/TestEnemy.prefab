@@ -164,6 +164,7 @@ MonoBehaviour:
   - {fileID: 4979466516497188798, guid: 999af0393c2ddaf42b3153c7cad49e23, type: 3}
   - {fileID: 5125975156352580076, guid: becc33a74f260b141b75d9a5d124343c, type: 3}
   SinglePowerupDropChance: 1
+  ScoreValue: 100
   TriggerDelay: 1
   MaxInaccuracyDegrees: 15
   Hurt1AudioPrefab: {fileID: 8953094202857078631, guid: e6ededa9a5e3e6749b4b07690b5377ba, type: 3}
@@ -402,6 +403,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4462454380756831842, guid: 8a9a63e633df71a4cacf9022dd7465d6, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 47cb00f5cc882b04bb0d8520dd0efd55, type: 3}
     - target: {fileID: 4462454380756831842, guid: 8a9a63e633df71a4cacf9022dd7465d6, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0

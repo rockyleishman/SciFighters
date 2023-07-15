@@ -99,32 +99,34 @@ public abstract class Unit : MonoBehaviour
     //to be called when taking damage
     internal virtual void Damage(int damageAmount, Faction damagingFaction)
     {
-        //cannot recieve damage from same faction
-        if (damagingFaction != UnitFaction)
-        {
-            Health -= damageAmount;
-            CheckLife();
 
-            //hurt audio
-            Audio sound;
-            int hurtNum = Random.Range(0, 3);
-            switch(hurtNum)
+            //cannot recieve damage from same faction
+            if (damagingFaction != UnitFaction)
             {
-                case 0:
-                    sound = Instantiate(Hurt1AudioPrefab);
-                    sound.transform.position = transform.position;
-                    break;
-                case 1:
-                    sound = Instantiate(Hurt2AudioPrefab);
-                    sound.transform.position = transform.position;
-                    break;
-                case 2:
-                    sound = Instantiate(Hurt3AudioPrefab);
-                    sound.transform.position = transform.position;
-                    break;
+                Health -= damageAmount;
+                CheckLife();
+
+                //hurt audio
+                Audio sound;
+                int hurtNum = Random.Range(0, 3);
+                switch (hurtNum)
+                {
+                    case 0:
+                        sound = Instantiate(Hurt1AudioPrefab);
+                        sound.transform.position = transform.position;
+                        break;
+                    case 1:
+                        sound = Instantiate(Hurt2AudioPrefab);
+                        sound.transform.position = transform.position;
+                        break;
+                    case 2:
+                        sound = Instantiate(Hurt3AudioPrefab);
+                        sound.transform.position = transform.position;
+                        break;
+                }
+
             }
-                
-        }
+        
     }
 
     //to be called to restore all health

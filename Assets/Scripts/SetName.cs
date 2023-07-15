@@ -5,14 +5,18 @@ using UnityEngine;
 
 public class SetName : MonoBehaviour
 {
-    public TextMeshPro NameInput;
+    public TMP_InputField NameInput;
+
+    
     // Start is called before the first frame update
     void Start()
     {
-        NameInput = GetComponent<TextMeshPro>();
+        NameInput = GetComponent<TMP_InputField>();
+        
     }
     public void GetName()
     {
         ScoreManager.Instance.playerName = NameInput.text;
+        
     }
 }

@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Slider volumeSlider = null;
+
     //[SerializeField] private TextMeshProUGUI volumeTextUI = null;
     [SerializeField] private GameObject _gameObject;
     private AudioSource AS;
@@ -45,26 +46,33 @@ public class UIManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI ScoreField;
     [SerializeField] public TextMeshProUGUI FinalScoreField;
     public Transform EndGameMenuScoreTF;
-     public TextMeshProUGUI  EndGameMenuScoreTMP;
+    public TextMeshProUGUI EndGameMenuScoreTMP;
     [SerializeField] public GameObject PauseMenu = null;
     [SerializeField] public GameObject EndGameMenu = null;
     [SerializeField] public GameObject FirstMenu = null;
+    [SerializeField] public GameObject NameInputMenu;
 
     private void Start()
     {
         ShowFirstMenu();
         AS = _gameObject.GetComponent<AudioSource>();
         EndGameMenuScoreTF = EndGameMenu.transform.Find("txtScore");
-        EndGameMenuScoreTMP=EndGameMenuScoreTF.GetComponent<TextMeshProUGUI >();
+        EndGameMenuScoreTMP = EndGameMenuScoreTF.GetComponent<TextMeshProUGUI>();
         volumeSlider.value = 0.5f;
+        NameInputMenu.SetActive(true);
     }
 
     private void Update()
     {
-        if (PauseMenu.activeSelf==true)
+        if (PauseMenu.activeSelf == true)
         {
             ChangeVolume();
         }
+    }
+
+    public void CloseNameInputCavase()
+    {
+        NameInputMenu.SetActive(false);
     }
 
     public void ShowFirstMenu()
@@ -81,10 +89,14 @@ public class UIManager : MonoBehaviour
 
     public void ShowEndGameMenu()
     {
+        var highScoreBoard = EndGameMenu.transform.Find("ScorePanel").GetComponent<HighScoreBoard>();
+        highScoreBoard.SavePlayerScoreData();
+        highScoreBoard.UpdateHighScoreLeaderboard();
         PauseMenu.SetActive(false);
         FirstMenu.SetActive(false);
         EndGameMenu.SetActive(true);
-        EndGameMenuScoreTMP.text="Score: " + ScoreManager.Instance.Score.ToString();
+        
+        EndGameMenuScoreTMP.text = "Score: " + ScoreManager.Instance.Score.ToString();
         //pause game
         Time.timeScale = 0;
         GameManager.Instance.PausePlayer();
@@ -180,7 +192,6 @@ public class UIManager : MonoBehaviour
 
     internal void UpdateScore()
     {
-
         ScoreField.text = "Score: " + ScoreManager.Instance.Score.ToString();
     }
 

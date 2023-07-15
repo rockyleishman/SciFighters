@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HighScoreBoard : MonoBehaviour
 {
@@ -31,7 +33,7 @@ public class HighScoreBoard : MonoBehaviour
     public void SavePlayerScoreData()
     {
         var playerScoreData = LoadPlayerScoreData();
-        playerScoreData.list.Add(new PlayerScore(ScoreManager.Instance.Score, playerName));
+        playerScoreData.list.Add(new PlayerScore(ScoreManager.Instance.Score, ScoreManager.Instance.playerName));
         // arrange the score
         playerScoreData.list.Sort((x, y) => y.score.CompareTo(x.score));
         SaveSystem.Save(SaveFileName, playerScoreData);
@@ -56,6 +58,21 @@ public class HighScoreBoard : MonoBehaviour
         }
 
         return playerScoreData;
+    }
+
+    public bool HasNewHighScore => ScoreManager.Instance.Score > LoadPlayerScoreData().list[9].score;
+    [SerializeField]private RectTransform highScoreLeaderboardContainer;
+    public void UpdateHighScoreLeaderboard()
+    {
+        var playerScoreList = LoadPlayerScoreData().list;
+        for (int i = 0; i < highScoreLeaderboardContainer.childCount; i++)
+        {
+            var child = highScoreLeaderboardContainer.GetChild(i);
+            child.Find("Score").GetComponent<Text>().text = playerScoreList[i].score.ToString();
+            child.Find("Name").GetComponent<Text>().text = playerScoreList[i].playerName;
+            
+        }
+        
     }
 
     #endregion

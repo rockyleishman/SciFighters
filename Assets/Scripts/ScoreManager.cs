@@ -22,7 +22,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     internal int Score { get; private set; }
-    internal string playerName;
+    internal string playerName ="No Name";
     private void Start()
     {
         Score = 0;
